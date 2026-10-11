@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07070a">
+<title>DOSSIER N° IV — La Cybercriminalité · Affaire KillSec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070a;--panel:#111116;--panel2:#18181f;--red:#ff3b45;--blood:#8f0d16;--blood2:#c1121f;--yellow:#f5ca52;--tape:#f2c94c;--paper:#e9e5dc;--manila:#c8a56b;--ink:#1b1511;--muted:#9b9aa5;--line:#34343d;--green:#9ee6bd;
+--disp:"Bebas Neue",Impact,"Arial Narrow",sans-serif;--type:"Special Elite","Courier New",ui-monospace,monospace;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--paper);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+body.loupe-on{cursor:none}body.loupe-on button,body.loupe-on a,body.loupe-on input,body.loupe-on label{cursor:pointer}
+[hidden]{display:none!important}
+a{color:#ff9da2;text-underline-offset:3px}button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+h1,h2,h3,p{margin-top:0}
+.disp{font-family:var(--disp);font-weight:400;letter-spacing:.02em}
+.typed{font-family:var(--type)}
+h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(2.3rem,5.6vw,4.9rem);line-height:.95;letter-spacing:.015em;margin-bottom:20px}
+h3{font-size:1.05rem;letter-spacing:-.01em;margin-bottom:8px}
+.eyebrow{font:700 .72rem var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow:before{content:"";width:26px;height:2px;background:var(--red)}
+.lead{font-size:clamp(1rem,1.8vw,1.28rem);max-width:760px;color:#d4d0d2}
+.muted{color:var(--muted)}.small{font-size:.82rem}.red{color:var(--red)}.yellow{color:var(--yellow)}
+ul{padding-left:1.1em;margin:0}li{margin-bottom:6px}
+/* ===== atmosphere ===== */
+body:before{content:"";position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .9s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+body:after{content:"";position:fixed;inset:0;z-index:59;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.72) 100%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.025) 4px)}
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:70}
+#flash.go{animation:flash .5s ease-out}@keyframes flash{0%{opacity:.8}100%{opacity:0}}
+#wipe{position:fixed;left:-20%;right:-20%;top:50%;height:150px;margin-top:-75px;z-index:65;pointer-events:none;transform:translateX(-130%) rotate(-5deg);background:repeating-linear-gradient(135deg,var(--tape) 0 22px,#141414 22px 44px);box-shadow:0 0 50px #000,0 0 0 9999px rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;overflow:hidden;font:900 28px var(--mono);letter-spacing:.3em;color:#111;white-space:nowrap}
+#wipe.run{animation:wipe .65s cubic-bezier(.6,0,.3,1)}
+@keyframes wipe{0%{transform:translateX(-130%) rotate(-5deg);box-shadow:0 0 50px #000,0 0 0 9999px rgba(0,0,0,0)}45%{box-shadow:0 0 50px #000,0 0 0 9999px rgba(0,0,0,.55)}100%{transform:translateX(130%) rotate(-5deg);box-shadow:0 0 50px #000,0 0 0 9999px rgba(0,0,0,0)}}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--red);z-index:62;box-shadow:0 0 14px var(--red);transition:width .5s}
+/* ===== chrome ===== */
+.topbar{position:fixed;top:3px;left:0;right:0;z-index:61;height:50px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 3vw;background:linear-gradient(#09090bf2,#09090bd9);border-bottom:1px solid #26262c;backdrop-filter:blur(10px)}
+.brand{font:400 1.25rem var(--disp);letter-spacing:.18em;white-space:nowrap}.brand b{color:var(--red);font-weight:400}.brand i{font-style:normal;color:#6f6c76}
+.topright{display:flex;align-items:center;gap:7px}
+.counter{white-space:nowrap;font:12px var(--mono);color:var(--muted);background:none;border:1px solid transparent;padding:6px 8px}.counter:hover{border-color:var(--line);color:#fff}
+.btn{white-space:nowrap;background:transparent;border:1px solid #55515a;color:var(--paper);padding:7px 11px;font:700 .72rem var(--mono);letter-spacing:.08em}
+.btn:hover{border-color:var(--red);color:#fff}.btn.red{background:var(--red);border-color:var(--red);color:#13090a}.btn.red:hover{background:#ff5a63}
+.btn[aria-pressed=true]{border-color:var(--yellow);color:var(--yellow)}.btn:disabled{opacity:.35;cursor:default}
+.clues{font:12px var(--mono);color:var(--yellow);border:1px dashed #68592b;padding:6px 9px;white-space:nowrap}
+.navbottom{position:fixed;bottom:14px;right:18px;z-index:61;display:flex;gap:7px}.navbottom .btn{background:#101015ee;padding:10px 15px}.navbottom .btn.red{background:var(--red);color:#13090a}.navbottom .btn.red:hover{background:#ff5a63}
+#notes{position:fixed;left:0;right:0;bottom:0;z-index:62;background:#0d0d11f5;border-top:2px solid var(--yellow);padding:16px 5vw 20px;transform:translateY(105%);transition:transform .3s;max-height:40vh;overflow:auto}
+#notes.open{transform:none}#notes h4{margin:0 0 6px;font:700 .72rem var(--mono);letter-spacing:.18em;color:var(--yellow)}#notes p{margin:0;max-width:900px;color:#d8d4d6}
+#index{position:fixed;inset:0;z-index:66;background:#050507f2;display:none;padding:80px 5vw 40px;overflow:auto}#index.open{display:block}
+#index ol{list-style:none;margin:0 auto;padding:0;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#index button{width:100%;text-align:left;background:#111116;border:1px solid var(--line);padding:12px 14px;display:flex;gap:12px;align-items:baseline}#index button:hover,#index button[aria-current=true]{border-color:var(--red);background:#1d1014}
+#index b{font:12px var(--mono);color:var(--red)}
+/* ===== gate ===== */
+#gate{position:fixed;inset:0;z-index:80;background:radial-gradient(ellipse at 50% 40%,#1a0b0e,#050506 70%);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;transition:opacity .8s,visibility .8s}
+#gate.gone{opacity:0;visibility:hidden}
+#gate .box{max-width:640px}#gate h1{font:400 clamp(3rem,11vw,7.5rem)/.85 var(--disp);margin:14px 0 12px;letter-spacing:.02em}#gate h1 span{color:var(--red)}
+#gate .stamp{margin-bottom:6px}#gate .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+#gate .btn{padding:13px 20px;font-size:.82rem}
+#gate .tape{position:absolute;left:-5%;right:-5%;height:34px;transform:rotate(-3deg)}#gate .tape.a{top:9%}#gate .tape.b{bottom:9%;transform:rotate(2deg)}
+/* ===== tape / stamp / blood ===== */
+.tape{position:absolute;z-index:4;height:36px;background:repeating-linear-gradient(135deg,var(--tape) 0 18px,#141414 18px 36px);box-shadow:0 6px 22px #000c;overflow:hidden;pointer-events:none}
+.tape span{display:block;line-height:36px;text-align:center;font:900 12px var(--mono);letter-spacing:.22em;color:#111;white-space:nowrap}
+.stamp{display:inline-block;border:3px solid var(--red);color:var(--red);padding:4px 14px;transform:rotate(-4deg);font:400 1.4rem var(--type);letter-spacing:.12em;text-transform:uppercase;opacity:.92;mix-blend-mode:normal}
+.stamp.green{border-color:var(--green);color:var(--green)}.stamp.big{font-size:clamp(1.8rem,4.5vw,3.4rem);padding:6px 20px;border-width:4px}
+.stamp.slam{animation:slam .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes slam{0%{transform:scale(3.2) rotate(-14deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-4deg);opacity:.92}}
+.drips{position:absolute;top:52px;left:0;right:0;height:0;z-index:3;pointer-events:none}
+.drips:before{content:"";position:absolute;left:0;right:0;top:-2px;height:9px;background:linear-gradient(#4d060d,#8f0d16)}
+.drips i{position:absolute;top:0;width:var(--w);height:0;background:linear-gradient(#8f0d16,#c1121f 85%,#e0313c);border-radius:0 0 99px 99px;animation:drip 3s cubic-bezier(.3,.7,.3,1) var(--dl) forwards;filter:drop-shadow(0 2px 3px #000)}
+@keyframes drip{to{height:var(--h)}}
+.splat{position:absolute;color:var(--blood2);opacity:.55;pointer-events:none;z-index:1;filter:drop-shadow(0 0 8px #5a060d)}
+/* ===== slides ===== */
+#deck{position:fixed;inset:0}
+.slide{position:fixed;inset:0;display:none;align-items:center;padding:78px max(5.5vw,22px) 84px;overflow-y:auto;overflow-x:hidden;background:radial-gradient(ellipse at 80% 20%,rgba(143,13,22,.14),transparent 50%),linear-gradient(160deg,#09090c,#0f0f14 60%,#120a0d)}
+.slide.active{display:flex}
+.inner{width:min(1120px,100%);margin:auto;position:relative;z-index:2}
+.slide-no{position:fixed;left:3vw;bottom:20px;font:11px var(--mono);color:#6a6570;z-index:3;letter-spacing:.12em}
+.reveal{opacity:0}.slide.active .reveal{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d,0)*.09s + .15s)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.span12{grid-column:span 12}
+.card{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);padding:20px;position:relative}
+.card:before{content:"";position:absolute;left:-1px;top:0;width:3px;height:26px;background:var(--red)}
+.metric{font:400 clamp(2.8rem,6vw,5rem)/1 var(--disp);letter-spacing:.01em;color:#fff}
+.metric-label{font:11px var(--mono);letter-spacing:.1em;color:var(--muted);margin-top:8px;text-transform:uppercase}
+.tag{display:inline-block;font:10px var(--mono);border:1px solid #51454a;color:#f2a4a8;padding:3px 7px;letter-spacing:.1em;margin:0 5px 8px 0}
+.tag.y{color:var(--yellow);border-color:#68592b}.tag.g{color:var(--green);border-color:#315744}
+.callout{border-left:3px solid var(--yellow);padding:12px 16px;background:#1c1910;color:#e7dcc1}
+.src{font:11px var(--mono);color:#7d7882;margin-top:14px}
+/* clues (loupe) */
+.clue{display:inline-block;color:transparent;text-shadow:0 0 7px rgba(245,202,82,.55);background:#0c0b0a;border:1px dashed #6b5a2c;padding:1px 8px;border-radius:2px;transition:color .35s,text-shadow .35s,background .35s;cursor:help;font:13px var(--type)}
+.clue.found{color:var(--yellow);text-shadow:none;background:#1c1910;border-style:solid}
+/* paper / folder / polaroid */
+.paper{background:linear-gradient(#ddd6c5,#cfc7b4);color:var(--ink);font-family:var(--type);padding:16px 16px 18px;box-shadow:0 12px 28px #000a,inset 0 0 40px rgba(120,90,40,.25);transform:rotate(var(--r,0deg));position:relative;transition:transform .25s}
+.paper:hover{transform:rotate(0) translateY(-6px) scale(1.03);z-index:5}
+.paper:before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7b83,#a50f1c 60%,#4d060d);box-shadow:0 3px 4px #0007}
+.paper h3{font:400 1.25rem var(--type);border-bottom:2px solid #1b1511;padding-bottom:5px;margin-bottom:8px;text-transform:uppercase}.paper p{margin:0;font-size:.92rem;line-height:1.4}
+.polaroid{background:#e8e3d6;color:#14110e;padding:9px 9px 12px;box-shadow:0 12px 26px #000b;transform:rotate(var(--r,0deg));transition:transform .25s;position:relative;text-align:left}
+.polaroid:hover{transform:rotate(0) scale(1.05);z-index:5}
+.polaroid .ph{aspect-ratio:16/10;background:radial-gradient(circle at 50% 40%,#2a2a32,#0c0c10);display:flex;align-items:center;justify-content:center;font-size:2.2rem;filter:grayscale(1) brightness(1.9) contrast(1.1);margin-bottom:8px;position:relative;overflow:hidden}
+.polaroid:hover .ph{filter:none}
+.polaroid h3{font:400 1.2rem var(--type);margin:0 0 2px;text-transform:uppercase}.polaroid p{margin:0;font:.8rem/1.3 var(--type)}.polaroid p b{color:#8f0d16}
+.polaroid .pin{position:absolute;top:-7px;left:50%;margin-left:-7px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff7b83,#a50f1c 60%,#4d060d);box-shadow:0 3px 4px #0007}
+/* terminal */
+.terminal{background:#050607;border:1px solid #34343d;padding:18px;box-shadow:0 12px 45px #0008}
+.terminal-head{display:flex;gap:6px;margin-bottom:12px}.dot{width:8px;height:8px;border-radius:50%;background:#5b5860}
+.terminal pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12.5px/1.9 var(--mono);color:#c9c7ce;margin:0}
+.terminal .prompt{color:var(--green)}.terminal .alert{color:var(--red)}
+.ln{display:block;opacity:0}.slide.active .ln{animation:rise .5s both;animation-delay:calc(var(--d)*.55s + .8s)}
+/* ===== COVER ===== */
+.cover{background:radial-gradient(ellipse at 75% 35%,rgba(143,13,22,.35),transparent 55%),linear-gradient(135deg,#050506,#0e0e13 60%,#1a0a0d)}
+.cover .lamp{position:absolute;top:0;right:12%;width:55vw;height:100%;background:conic-gradient(from 180deg at 50% -5%,transparent 160deg,rgba(255,236,190,.09) 178deg,rgba(255,236,190,.16) 180deg,rgba(255,236,190,.09) 182deg,transparent 200deg);animation:lamp 6s infinite;pointer-events:none}
+@keyframes lamp{0%,100%{opacity:1}46%{opacity:1}48%{opacity:.35}50%{opacity:.95}52%{opacity:.25}54%{opacity:1}}
+.cover-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.folder{position:relative;background:linear-gradient(160deg,#d3b27a,#bd9657 60%,#a98245);color:var(--ink);padding:44px 34px 30px;box-shadow:0 30px 60px #000c,inset 0 0 60px rgba(90,60,20,.35);transform:rotate(-1.5deg);font-family:var(--type)}
+.folder:before{content:"";position:absolute;top:-24px;left:0;width:46%;height:26px;background:#bd9657;border-radius:8px 18px 0 0;box-shadow:inset 0 0 30px rgba(90,60,20,.3)}
+.folder .ftab{position:absolute;top:-19px;left:18px;font:.78rem var(--type);letter-spacing:.14em;color:#3a2a12}
+.folder h1{font:400 clamp(3.3rem,8.5vw,7rem)/.84 var(--disp);margin:6px 0 14px;color:#1b1511;letter-spacing:.01em;text-shadow:1px 1px 0 rgba(255,255,255,.2)}
+.folder p{margin:0 0 8px}.folder .case{font-size:1.05rem;letter-spacing:.1em}.folder .stamp{position:absolute;right:20px;top:22px;font-size:1.1rem;background:transparent}
+.folder .under{border-bottom:2px solid var(--ink);padding:0 4px}
+.cover-side{position:relative;min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:16px}
+.sil{width:min(300px,60%);filter:drop-shadow(0 0 28px rgba(255,236,190,.14))}
+.alertbox{width:100%;background:#050607e6;border:1px solid #5c222c;padding:12px 14px;font:12px/1.7 var(--mono);color:#c9c7ce;position:relative}
+.alertbox b{color:var(--red)}.alertbox:after{content:"";position:absolute;right:12px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.15}}
+.lensdeco{position:absolute;right:-2%;top:12%;width:150px;transform:rotate(-18deg);opacity:.95;filter:drop-shadow(0 8px 14px #000)}
+/* ===== slide 2 ===== */
+.sms{background:#1a1a22;border:1px solid #2c2c36;border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:.95rem;max-width:380px;box-shadow:0 8px 24px #0008}
+.tl{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}.tl .time{font:13px var(--mono);color:var(--red);padding-top:4px}.tl p{margin:0;color:#d0ccd0}
+.bigq{font:400 clamp(1.5rem,3.2vw,2.6rem)/1.15 var(--type);color:#fff;border-left:4px solid var(--red);padding:6px 0 6px 18px;margin-top:26px;min-height:2.4em}
+.bigq:after{content:"▌";color:var(--red);animation:blink 1s infinite;margin-left:2px}
+/* ===== chips / roles ===== */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{background:#14141a;border:1px solid var(--line);padding:9px 13px;font-size:.88rem}.chip:hover,.chip[aria-pressed=true]{border-color:var(--red);background:#251015}
+.role{transition:border-color .3s,box-shadow .3s,transform .3s}.role.hit{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 30px rgba(255,59,69,.25);transform:translateY(-4px)}
+.big-def{font:400 clamp(1.15rem,2.3vw,1.7rem)/1.3 var(--type);border:2px solid #4a4650;padding:16px 20px;position:relative;margin:16px 0}
+.big-def b{color:var(--red);font-weight:400;border-bottom:2px solid var(--red)}
+/* ===== board ===== */
+.board{position:relative;min-height:470px}
+.board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.string{fill:none;stroke:#d4202d;stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 2px 2px #000);stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s ease-out forwards;animation-delay:var(--sd,.4s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hub{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);z-index:3;font:400 clamp(2rem,5vw,3.8rem) var(--disp);letter-spacing:.12em;color:#e8e3d6;background:#0b0b0e;border:2px solid var(--red);padding:6px 22px;box-shadow:0 0 40px rgba(255,59,69,.3)}
+.node{position:absolute;z-index:2;width:clamp(120px,15vw,170px);border:0;padding:0;background:none;text-align:left}
+.node .polaroid{pointer-events:none}.node[aria-pressed=true] .polaroid{outline:3px solid var(--red);transform:rotate(0) scale(1.07)}
+.node:hover .polaroid{transform:rotate(0) scale(1.05)}
+.detail{margin-top:14px;min-height:74px;border:1px dashed #5a2a30;background:#150d10;padding:14px 18px;font-size:.98rem}
+.detail b{color:var(--red);font-family:var(--type);font-weight:400;letter-spacing:.1em}
+/* ===== HUD ===== */
+.hud{position:relative;background:linear-gradient(#0a1410,#050806);border:1px solid #2f5a45;color:var(--green);padding:14px;box-shadow:0 0 40px rgba(60,200,140,.08);overflow:hidden}
+.hud:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(158,230,189,.05) 4px);pointer-events:none}
+.hud .scene{position:relative;height:300px;display:flex;align-items:flex-end;justify-content:center;background:radial-gradient(ellipse at 50% 90%,#12251c,#060908 70%);border:1px solid #1d3a2d}
+.hud .scene svg{height:92%}
+.reticle{position:absolute;left:50%;top:44%;width:150px;height:170px;transform:translate(-50%,-50%);border:0;animation:scan 4s ease-in-out infinite}
+.reticle i{position:absolute;width:26px;height:26px;border:3px solid #2cff9a}.reticle i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}.reticle i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}.reticle i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}.reticle i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+@keyframes scan{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-48%,-52%) scale(1.04)}}
+.scanline{position:absolute;left:0;right:0;height:2px;background:#2cff9a;box-shadow:0 0 14px #2cff9a;animation:sweep 3.2s linear infinite;opacity:.6}
+@keyframes sweep{0%{top:0}100%{top:100%}}
+.hud dl{margin:12px 0 0;font:12.5px/1.8 var(--mono);position:relative}.hud dt{display:inline;color:#6fb394}.hud dd{display:inline;margin:0;font-weight:700}.hud div.r{display:block}
+.hud .head{font:700 .95rem var(--mono);letter-spacing:.08em;margin-bottom:4px;color:#d7ffe8;position:relative}
+.hud .innocent{color:var(--yellow)}
+/* ===== pyramid ===== */
+.pyr-wrap{display:grid;grid-template-columns:minmax(260px,480px) 1fr;gap:34px;align-items:center}
+.pyr{clip-path:polygon(50% 0,100% 100%,0 100%);display:flex;flex-direction:column;gap:4px;aspect-ratio:1/.9;width:100%}
+.pyr button{flex:1;border:0;background:linear-gradient(#2a1318,#1a0c10);color:var(--paper);font:400 1.3rem var(--disp);letter-spacing:.1em;display:flex;align-items:center;justify-content:center;position:relative}
+.pyr button:nth-child(1){background:linear-gradient(#7a0c16,#5a0810)}.pyr button:nth-child(2){background:linear-gradient(#5f0b13,#43070d)}.pyr button:nth-child(3){background:linear-gradient(#45090f,#2e060a)}.pyr button:nth-child(4){background:linear-gradient(#30080c,#1f0508)}
+.pyr button:hover,.pyr button[aria-pressed=true]{filter:brightness(1.7)}.pyr small{display:block;font:10px var(--mono);letter-spacing:.06em;opacity:.7}
+.pyr button span{text-align:center;line-height:1.1}
+.axis{font:11px var(--mono);color:var(--muted);letter-spacing:.1em;margin-top:8px}
+/* ===== phishing ===== */
+.mail{background:#e9e5dc;color:#17130f;font-family:var(--type);padding:0;box-shadow:0 20px 50px #000b;transform:rotate(-1deg);position:relative}
+.mail .bar{background:#bbb4a3;padding:8px 14px;font-size:.78rem;display:flex;justify-content:space-between}
+.mail .body{padding:20px 22px 26px;font-size:1rem;line-height:1.6}
+.mail mark{background:transparent;color:inherit;border-bottom:2px dotted #8f0d16;cursor:pointer;transition:background .2s}.mail mark.hl{background:#ffd34d}
+.mail .num{display:inline-flex;width:19px;height:19px;border-radius:50%;background:#8f0d16;color:#fff;font:700 11px var(--mono);align-items:center;justify-content:center;vertical-align:super;margin-left:3px}
+.mail .link{display:inline-block;margin-top:8px;background:#2a5db0;color:#fff;padding:6px 14px;border-radius:3px;font:700 .9rem Inter,sans-serif}
+.stamp.fix{position:absolute;right:14px;bottom:10px;font-size:.9rem;transform:rotate(-6deg)}
+.flags{list-style:none;padding:0;margin:0}.flags li{margin:0 0 8px}.flags button{width:100%;text-align:left;background:#14141a;border:1px solid var(--line);padding:11px 14px;display:flex;gap:12px;align-items:center}.flags button:hover,.flags button.hl{border-color:var(--yellow);background:#1c1910}
+.flags b{width:24px;height:24px;border-radius:50%;background:var(--blood2);display:inline-flex;align-items:center;justify-content:center;font:700 12px var(--mono);flex:none}
+/* ===== logs ===== */
+.evidence{border:1px solid #48434c;background:#0c0c10;padding:10px;font:12.5px/1.6 var(--mono)}
+.logline{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;padding:6px 10px;color:#c9c7ce;font:inherit}.logline:hover,.logline[aria-pressed=true]{background:#1c1910;border-left-color:var(--yellow);color:#fff}
+/* ===== rights table ===== */
+.rights{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px 12px}
+.rights .a{color:var(--red);font:400 1.5rem var(--disp)}.rights .c{background:#14141a;border:1px solid var(--line);padding:9px 13px;transition:.2s}
+.rights .d{background:#2a1015;border:1px solid #6a2530;padding:9px 13px;font:700 .8rem var(--mono);letter-spacing:.1em;color:#ffb3b8}
+.rights .row{display:contents}.rights .row:hover .c{border-color:var(--red)}.rights .row:hover .d{background:#4a1520;color:#fff}
+/* ===== balance ===== */
+.bal svg{width:100%;max-width:520px;display:block;margin:0 auto}
+.bal input[type=range]{width:100%;accent-color:var(--red);margin:6px 0 2px}
+.zone{font:400 1.3rem var(--type);text-align:center;min-height:2.6em;padding:8px 14px;border:2px solid #4a4650}
+.zone.ok{border-color:var(--green);color:var(--green)}.zone.bad{border-color:var(--red);color:var(--red)}
+.pri{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.pri .card{padding:12px 14px}.pri h3{font:400 1.15rem var(--type);margin:0 0 2px;color:var(--yellow);text-transform:uppercase}.pri p{margin:0;font-size:.86rem;color:#c9c5ca}
+/* ===== laws ===== */
+.law{display:grid;grid-template-columns:34px 1fr auto;gap:14px;align-items:start;background:linear-gradient(#cfc7b4,#c3baa4);color:var(--ink);padding:13px 16px;margin-bottom:8px;font-family:var(--type);box-shadow:0 8px 18px #0009;position:relative}
+.law:before{content:"";position:absolute;left:0;top:-9px;width:90px;height:10px;background:#c3baa4;border-radius:5px 5px 0 0}
+.law .n{font:400 1.5rem var(--disp);color:#8f0d16}.law h3{font:400 1.05rem var(--type);margin:0 0 2px}.law p{margin:0;font-size:.88rem;line-height:1.35}
+.law .st{font:700 .66rem var(--mono);letter-spacing:.08em;border:1.5px solid;padding:3px 6px;white-space:nowrap}.st.ok{color:#14592f;border-color:#14592f}.st.chk{color:#8f5a00;border-color:#8f5a00}
+body.hide-prep .prep{display:none!important}
+/* ===== cross-border ===== */
+.world svg{width:100%;height:auto;display:block}
+.world text{font-family:var(--type);fill:#e9e5dc}.world .lab{font-size:15px}.world .sub{font:11px var(--mono);fill:#9b9aa5}
+.world .node-c{fill:#14141a;stroke:#ff3b45;stroke-width:2}.world .border{stroke:#6a6570;stroke-dasharray:6 6}
+/* ===== lina / evidence ===== */
+.evi{background:#e8e3d6;color:#17130f;padding:14px 16px 16px;font-family:var(--type);transform:rotate(var(--r,0deg));box-shadow:0 12px 26px #000b;position:relative}
+.evi .no{position:absolute;top:-10px;right:12px;background:var(--blood2);color:#fff;font:700 .7rem var(--mono);padding:3px 8px;letter-spacing:.1em}
+.evi h3{font:400 .78rem var(--mono);letter-spacing:.16em;color:#6a1620;margin-bottom:6px}.evi p{margin:0;font-size:1.05rem;line-height:1.35}
+.evi.msg p{font-size:1.2rem;color:#8f0d16}
+/* ===== questions / timer / quiz ===== */
+.qs{counter-reset:q;display:grid;gap:10px}.qs .q{display:flex;gap:16px;align-items:center;background:#14141a;border:1px solid var(--line);padding:14px 18px;font-size:1.12rem}
+.qs .q:before{counter-increment:q;content:counter(q);font:400 2.4rem/1 var(--disp);color:var(--red);width:34px}
+.timer{font:400 clamp(3rem,8vw,6rem)/1 var(--disp);color:#fff;letter-spacing:.06em}.timer.low{color:var(--red);animation:blink 1s infinite}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.quiz-opts button{text-align:left;background:#111116;border:1px solid var(--line);padding:15px}.quiz-opts button:hover:not(:disabled){border-color:var(--yellow)}
+.quiz-opts button.correct{border-color:var(--green);background:#102019}.quiz-opts button.wrong{border-color:var(--red);background:#260d11}
+.feedback{min-height:48px;color:var(--yellow);margin-top:12px;font-size:.95rem}
+.pips{display:flex;gap:6px;margin-bottom:10px}.pips i{width:30px;height:5px;background:#33333b}.pips i.on{background:var(--red)}.pips i.done{background:var(--green)}
+/* ===== verdict ===== */
+.vrow{display:grid;grid-template-columns:1fr 36px 1.2fr;gap:10px;align-items:center;margin-bottom:10px;display:none}
+.vrow.show{display:grid;animation:rise .5s both}.vrow .f{background:#14141a;border:1px solid var(--line);padding:12px 14px}.vrow .i{background:#2a1015;border:1px solid #6a2530;padding:12px 14px;color:#ffd0d3}.vrow .ar{font:400 1.8rem var(--disp);color:var(--red);text-align:center}
+.vrow .f b,.vrow .i b{display:block;font:10px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:3px}
+.vfoot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:18px}
+/* ===== prevention ===== */
+.check{display:flex;gap:12px;align-items:center;background:#14141a;border:1px solid var(--line);padding:12px 14px;margin-bottom:8px;width:100%;text-align:left}
+.check i{width:22px;height:22px;border:2px solid #6a6570;display:inline-flex;align-items:center;justify-content:center;flex:none;font-style:normal;color:transparent}
+.check[aria-pressed=true]{border-color:var(--green);background:#102019}.check[aria-pressed=true] i{background:var(--green);border-color:var(--green);color:#06140d}
+/* ===== closing ===== */
+.quote{font:400 clamp(1.3rem,3vw,2.3rem)/1.3 var(--type);color:#f0ece2;max-width:900px}.quote em{font-style:normal;color:var(--red)}
+.cctv{margin:0 auto;max-width:max(320px,calc((100vh - 340px)*1.7778));position:relative;background:#000;border:2px solid #3a3a42;box-shadow:0 0 0 6px #121216,0 24px 70px #000;aspect-ratio:16/9;width:100%;overflow:hidden}
+.cctv video,.cctv iframe{width:100%;height:100%;display:block;background:#000;border:0}
+.cctv:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.18) 3px)}
+.cctv .hudtop{position:absolute;left:14px;top:12px;right:14px;z-index:3;display:flex;justify-content:space-between;font:12px var(--mono);color:#fff;text-shadow:0 0 6px #000;pointer-events:none}
+.rec{color:var(--red)}.rec:before{content:"●";margin-right:6px;animation:blink 1s infinite}
+.cctv .overlay{position:absolute;inset:0;z-index:4;background:radial-gradient(ellipse at center,#14090bd9,#040405f2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:12px}
+.cctv .overlay.hide{display:none}
+.playbig{width:84px;height:84px;border-radius:50%;border:3px solid var(--red);background:#0009;color:var(--red);font-size:2rem;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(255,59,69,.4)}.playbig:hover{background:var(--red);color:#fff}
+.vidtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}.vidtools input[type=text]{flex:1;min-width:200px;background:#0c0c10;border:1px solid var(--line);color:var(--paper);padding:8px 10px;font:12px var(--mono)}
+.vidtools input[type=file]{display:none}
+.source-list li{margin-bottom:10px}
+/* crimes grid */
+.crimes .ph{aspect-ratio:16/4.4;font-size:1.8rem;margin-bottom:6px}.pyr button:nth-child(1) small{display:none}
+.mail .link mark{color:#fff}
+/* loupe */
+#lens{position:fixed;left:0;top:0;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;z-index:58;pointer-events:none;display:none;border:7px solid #1d1d23;box-shadow:0 0 0 2px #5a5660,inset 0 0 28px rgba(255,255,255,.14),0 14px 30px #000b,0 0 40px rgba(245,202,82,.18);background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.16),rgba(255,255,255,0) 45%);backdrop-filter:brightness(1.35) contrast(1.15) saturate(1.2)}
+#lens:after{content:"";position:absolute;left:100%;top:100%;width:64px;height:15px;margin:-6px 0 0 -18px;background:linear-gradient(#4a3a27,#241a10);border-radius:8px;transform-origin:0 50%;transform:rotate(45deg);box-shadow:0 4px 8px #000a}
+body.loupe-on #lens.vis{display:block}
+/* ===== responsive ===== */
+@media(max-width:900px){
+ .span3,.span4,.span5,.span6,.span7,.span8{grid-column:span 12}.cover-grid,.pyr-wrap{grid-template-columns:1fr}.cover-side{min-height:0}.lensdeco{display:none}
+ .board{min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:20px 14px;padding-top:70px}.board svg{display:none}.hub{top:0;transform:translate(-50%,0)}.node{position:static!important;width:auto}
+ .quiz-opts,.pri{grid-template-columns:1fr}.tl{grid-template-columns:78px 1fr}.vrow{grid-template-columns:1fr}.vrow .ar{display:none}.rights{grid-template-columns:1fr}.rights .a{display:none}
+ #lens{display:none!important}.folder h1{font-size:9.5vw}.folder{padding:40px 20px 24px}.folder .stamp{position:static;display:block;width:fit-content;margin-bottom:10px}
+ .brand i,.hide-sm{display:none}.slide{padding:70px 18px 90px}.topbar{padding:0 10px}.btn{padding:6px 8px}.law{grid-template-columns:28px 1fr}.law .st{grid-column:2}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.ln{opacity:1!important}.string{stroke-dashoffset:0}.drips i{height:var(--h)}.vrow{display:grid}}
+@media print{
+ body{overflow:visible;background:#09090b}body:before,body:after,.topbar,.navbottom,#progress,#lens,#wipe,#flash,#gate,#notes,#index,.slide-no,.tape,.drips{display:none!important}
+ #deck{position:static}.slide{position:static;display:flex!important;min-height:100vh;page-break-after:always;overflow:visible;-webkit-print-color-adjust:exact;print-color-adjust:exact}.reveal,.ln{opacity:1!important;animation:none!important}.clue{color:var(--yellow)}.vrow{opacity:1;transform:none}.string{stroke-dashoffset:0;animation:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <defs>
+  <filter id="glow"><feGaussianBlur stdDeviation="3"/></filter>
+  <symbol id="fedora" viewBox="0 0 200 110"><ellipse cx="100" cy="84" rx="97" ry="19" fill="#0d0d12" stroke="#3a3a44" stroke-width="2"/><path d="M48 82C46 46 60 22 88 16Q100 30 112 16C140 22 154 46 152 82Z" fill="#0d0d12" stroke="#3a3a44" stroke-width="2"/><path d="M48 70H152L152 82H48Z" fill="#8f0d16"/></symbol>
+  <symbol id="inv" viewBox="0 0 240 320">
+   <path d="M30 320 L44 205 Q56 150 100 136 L120 160 L140 136 Q184 150 196 205 L210 320Z" fill="#0d0d12" stroke="#4a4a56" stroke-width="2"/>
+   <path d="M100 136 L78 172 L116 158Z M140 136 L162 172 L124 158Z" fill="#191920" stroke="#4a4a56" stroke-width="2"/>
+   <path d="M120 160 L120 320" stroke="#2a2a33" stroke-width="2"/>
+   <path d="M82 232 Q120 252 158 232" stroke="#2a2a33" stroke-width="3" fill="none"/>
+   <ellipse cx="120" cy="108" rx="30" ry="36" fill="#0d0d12" stroke="#4a4a56" stroke-width="2"/>
+   <ellipse cx="120" cy="82" rx="86" ry="15" fill="#0d0d12" stroke="#4a4a56" stroke-width="2"/>
+   <path d="M72 80C70 46 84 26 108 20Q120 32 132 20C156 26 170 46 168 80Z" fill="#0d0d12" stroke="#4a4a56" stroke-width="2"/>
+   <path d="M72 70H168L168 80H72Z" fill="#8f0d16"/>
+  </symbol>
+  <symbol id="hack" viewBox="0 0 240 320">
+   <path d="M120 14C72 14 52 60 56 108C58 130 44 150 30 172L22 320H218L210 172C196 150 182 130 184 108C188 60 168 14 120 14Z" fill="#0b0b0f" stroke="#3b5a4a" stroke-width="2"/>
+   <ellipse cx="120" cy="104" rx="36" ry="44" fill="#000"/>
+   <ellipse cx="106" cy="98" rx="9" ry="5" fill="#ff3b45" filter="url(#glow)"/><ellipse cx="134" cy="98" rx="9" ry="5" fill="#ff3b45" filter="url(#glow)"/>
+   <ellipse cx="106" cy="98" rx="5" ry="2.4" fill="#ffb3b8"/><ellipse cx="134" cy="98" rx="5" ry="2.4" fill="#ffb3b8"/>
+   <path d="M62 196 Q120 226 178 196" stroke="#3b5a4a" fill="none" stroke-width="2"/><path d="M120 156V320" stroke="#1f2a25" stroke-width="2"/>
+  </symbol>
+  <symbol id="mag" viewBox="0 0 120 120"><circle cx="48" cy="48" r="36" fill="rgba(255,255,255,.07)" stroke="#cfcac0" stroke-width="7"/><circle cx="48" cy="48" r="29" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/><path d="M32 36Q40 26 54 28" stroke="rgba(255,255,255,.55)" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="76" y="70" width="46" height="13" rx="6" transform="rotate(45 76 70)" fill="#3a2a18" stroke="#6b5130"/></symbol>
+  <symbol id="splat" viewBox="0 0 200 200"><g fill="currentColor"><circle cx="100" cy="100" r="34"/><circle cx="62" cy="70" r="14"/><circle cx="146" cy="64" r="10"/><circle cx="150" cy="140" r="16"/><circle cx="52" cy="142" r="9"/><circle cx="108" cy="30" r="7"/><circle cx="176" cy="102" r="6"/><circle cx="30" cy="100" r="5"/><circle cx="96" cy="176" r="8"/><path d="M100 100 L10 40 L30 70Z M100 100 L190 20 L160 70Z M100 100 L170 190 L130 140Z M100 100 L20 180 L60 130Z"/></g></symbol>
+ </defs>
+</svg>
+
+<div id="progress"></div><div id="flash"></div><div id="wipe">DO NOT CROSS · NE PAS FRANCHIR · DO NOT CROSS · NE PAS FRANCHIR</div><div id="lens" aria-hidden="true"></div>
+
+<div id="gate">
+ <div class="tape a"><span>SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS —</span></div>
+ <div class="box">
+  <div class="stamp">Accès restreint</div>
+  <h1>DOSSIER<br><span>KILLSEC</span></h1>
+  <p class="typed muted">Pièces à conviction numériques · Droit &amp; éthique de l’informatique</p>
+  <p class="small muted">Ambiance sonore et visuelle : sons de synthèse (aucun fichier externe). Vous pourrez couper le son à tout moment avec la touche <b>S</b>.</p>
+  <div class="row"><button class="btn red" id="enterSound">OUVRIR LE DOSSIER · AVEC SON</button><button class="btn" id="enterSilent">OUVRIR · SANS SON</button></div>
+ </div>
+ <div class="tape b"><span>CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR —</span></div>
+</div>
+
+<header class="topbar">
+ <div class="brand">DOSSIER <b>N° IV</b> <i>/ KILLSEC</i></div>
+ <div class="topright">
+  <span class="clues hide-sm" id="clueCount" title="Indices trouvés avec la loupe">🔍 INDICES 0/0</span>
+  <button class="counter" id="counter" title="Index des pièces (G)">01 / 26</button>
+  <button class="btn hide-sm" id="lensBtn" aria-pressed="true" title="Loupe (L)">LOUPE</button>
+  <button class="btn" id="soundBtn" aria-pressed="false" title="Son (S)">SON : OFF</button>
+  <button class="btn hide-sm" id="notesBtn" aria-pressed="false" title="Notes de l’orateur (N)">NOTES</button>
+  <button class="btn hide-sm" onclick="window.print()" title="Exporter en PDF">PDF</button>
+ </div>
+</header>
+<div class="navbottom"><button class="btn" id="prev" aria-label="Pièce précédente">←</button><button class="btn red" id="next" aria-label="Pièce suivante">SUIVANT →</button></div>
+<aside id="notes" aria-live="polite"><h4>NOTES DE L’ORATEUR</h4><p id="notesText"></p></aside>
+<nav id="index" aria-label="Index du dossier"><ol id="indexList"></ol></nav>
+
+<main id="deck">
+
+<!-- 01 COVER -->
+<section class="slide cover" data-title="Ouverture du dossier" data-blood="1" data-notes="Présentez le dossier comme une enquête : la classe joue le rôle des enquêteurs. Annoncez le fil : quel crime, comment, quelle victime, quels droits, que dit la loi, comment prouver, où placer la limite éthique. Ajoutez la date et l’encadrant.">
+ <div class="lamp"></div>
+ <div class="tape" style="left:-4%;right:-4%;bottom:14%;transform:rotate(-4deg)"><span>SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS —</span></div>
+ <div class="tape" style="left:-4%;right:-4%;bottom:8%;transform:rotate(2.5deg)"><span>CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR — CRIME SCENE — DO NOT CROSS — SCÈNE DE CRIME — NE PAS FRANCHIR —</span></div>
+ <svg class="splat" style="left:38%;top:62%;width:130px" viewBox="0 0 200 200"><use href="#splat"/></svg>
+ <div class="inner cover-grid">
+  <div class="folder reveal">
+   <span class="ftab">DOSSIER N° IV — DROIT &amp; ÉTHIQUE DE L’INFORMATIQUE</span>
+   <div class="stamp">Confidentiel</div>
+   <p class="case">CASE FILE 01 · AFFAIRE KILLSEC</p>
+   <h1>LA CYBER<br>CRIMINALITÉ</h1>
+   <p>Crime numérique, risques et protection des droits fondamentaux</p>
+   <p class="case">STATUT : <span class="under">SOUS ENQUÊTE</span></p>
+   <p style="margin-top:18px">Présenté par <b>Ranim Neji</b></p>
+  </div>
+  <div class="cover-side reveal">
+   <svg class="lensdeco" viewBox="0 0 120 120"><use href="#mag"/></svg>
+   <div style="display:flex;align-items:flex-end;gap:0;width:100%;justify-content:center">
+    <svg class="sil" viewBox="0 0 240 320" style="width:52%" role="img" aria-label="Silhouette d’un enquêteur en chapeau"><use href="#inv"/></svg>
+    <svg class="sil" viewBox="0 0 240 320" style="width:44%;margin-left:-6%" role="img" aria-label="Silhouette d’un attaquant encapuchonné"><use href="#hack"/></svg>
+   </div>
+   <div class="alertbox"><b>PIÈCE 00</b> — Capture écran<br>« 3 tentatives de connexion échouées — origine inconnue »</div>
+   <button class="btn red" data-next>OUVRIR LE DOSSIER ➜</button>
+  </div>
+ </div>
+ <div class="slide-no">00 — OUVERTURE</div>
+</section>
+
+<!-- 02 AFFAIRE -->
+<section class="slide" data-title="L’affaire commence" data-notes="Racontez la scène comme une histoire vraie. Laissez la question en suspens 10 secondes. Elle sera reprise à la fin : l’infraction naît de l’accès non autorisé, de la tromperie et de l’usage des données, pas du clic en lui-même.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 01 — L’affaire commence</div>
+  <h2 class="reveal">Un message,<br><span class="red">un clic…</span></h2>
+  <div class="reveal" style="max-width:820px">
+   <div class="tl"><div class="time">LUNDI 08h12</div><div><div class="sms">« Votre compte sera suspendu. Confirmez vos identifiants. »</div></div></div>
+   <div class="tl"><div class="time">LUNDI 08h14</div><p>Clic. Mot de passe saisi. <b>Accès au compte perdu.</b> <span class="clue" tabindex="0">2 minutes suffisent.</span></p></div>
+   <div class="tl"><div class="time">JEUDI</div><p>Données personnelles, photos, contacts : <b class="red">volés.</b></p></div>
+  </div>
+  <div class="bigq reveal tw">« À quel moment une simple action numérique devient-elle une infraction ? »</div>
+  <p class="muted small reveal" style="margin-top:14px">Ce scénario banal est la porte d’entrée de nombreuses attaques. Le dossier KillSec montre ce qui se passe quand l’attaque change d’échelle.</p>
+ </div>
+ <div class="slide-no">01 — L’AFFAIRE COMMENCE</div>
+</section>
+
+<!-- 03 SIGNAL -->
+<section class="slide" data-title="Le signal — Europol / KillSec" data-notes="Cas d’étude : Europol annonce la prise de contrôle du site de fuite attribué à KillSec (30 sept. / 1er oct. 2026). Insistez : une arrestation n’est pas une condamnation. Les chiffres (≈1 000 attaques présumées, ≈500 réussies) proviennent du dossier d’origine et peuvent évoluer.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 02 — Le signal</div>
+  <h2 class="reveal">À 110 téraoctets,<br>le silence devient <span class="red">une preuve.</span></h2>
+  <p class="lead reveal">Début octobre 2026, Europol annonce la prise de contrôle du site de fuite de données attribué au groupe KillSec. L’enquête internationale entre dans une nouvelle phase.</p>
+  <div class="grid reveal" style="margin-top:26px">
+   <div class="card span4"><div class="metric" data-count="3">3</div><div class="metric-label">Arrestations provisoires</div></div>
+   <div class="card span4"><div class="metric" data-count="8">8</div><div class="metric-label">Perquisitions · quatre pays européens</div></div>
+   <div class="card span4"><div class="metric"><span data-count="110">110</span> To</div><div class="metric-label">Données sécurisées contre de nouveaux accès</div></div>
+   <div class="card span12"><span class="tag y">À LIRE AVANT DE CONCLURE</span><p style="margin:6px 0 0">Les autorités relient le groupe à environ <b>1 000 attaques</b> présumées ; environ <b>500</b> auraient été identifiées comme réussies à ce stade. Ces chiffres peuvent évoluer. <b>Une arrestation n’est pas une condamnation.</b> <span class="clue" tabindex="0">Présomption d’innocence : toujours.</span></p></div>
+  </div>
+  <p class="src reveal">Source : Europol, « Teenager suspected of leading KillSec ransomware group as law enforcement seizes servers and leak site » (oct. 2026).</p>
+ </div>
+ <div class="slide-no">02 — FAITS INITIAUX</div>
+</section>
+
+<!-- 04 FICHES -->
+<section class="slide" data-title="Fiches d’enquête" data-notes="Une fiche = une phrase. Insistez sur le lien entre les notions : un cybercriminel agit dans le cyberespace, sur un système, des données, et laisse des preuves numériques. Le décret-loi 2022-54 définit lui-même les notions de système d’information et de système de communication (article 5).">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 03 — Identification des notions</div>
+  <h2 class="reveal">Fiches d’enquête</h2>
+  <div class="grid reveal" style="margin-top:26px;gap:22px 16px">
+   <div class="paper span3" style="--r:-1.5deg"><h3>Informatique</h3><p>Traitement automatique de l’information.</p></div>
+   <div class="paper span3" style="--r:1deg"><h3>Système informatique</h3><p>Matériels et logiciels qui traitent des données.</p></div>
+   <div class="paper span3" style="--r:-.8deg"><h3>Donnée numérique</h3><p>Information codée, stockée ou transmise.</p></div>
+   <div class="paper span3" style="--r:1.6deg"><h3>Cyberespace</h3><p>Espace des réseaux interconnectés.</p></div>
+   <div class="paper span3" style="--r:1.2deg"><h3>Cybercriminalité</h3><p>Infractions contre, avec ou via les systèmes d’information.</p></div>
+   <div class="paper span3" style="--r:-1.2deg"><h3>Cybercriminel</h3><p>Auteur de l’infraction.</p></div>
+   <div class="paper span3" style="--r:.8deg"><h3>Victime</h3><p>Personne, entreprise ou institution lésée.</p></div>
+   <div class="paper span3" style="--r:-1.8deg"><h3>Preuve numérique</h3><p>Trace électronique : logs, messages, fichiers.</p></div>
+  </div>
+  <p class="reveal" style="margin-top:22px"><span class="clue" tabindex="0">Le décret-loi 2022-54 définit lui-même « système d’information » et « système de communication » (art. 5).</span></p>
+ </div>
+ <div class="slide-no">03 — VOCABULAIRE</div>
+</section>
+
+<!-- 05 DISTINCTION -->
+<section class="slide" data-title="Crime informatique ≠ cybercrime ?" data-notes="Attention : les auteurs emploient ces termes différemment. Présentez ce schéma comme un cadre pédagogique, pas comme une classification légale unique. Critère : le numérique est-il l’objet de l’infraction, son moyen, ou seulement un accélérateur ? Cliquez sur les exemples pour classer.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 04 — Distinction</div>
+  <h2 class="reveal">Crime informatique <span class="red">≠</span> cybercrime ?</h2>
+  <div class="big-def reveal">Le cybercrime est toute infraction commise <b>contre</b>, <b>au moyen de</b>, ou <b>dans l’environnement d’</b>un système d’information.</div>
+  <div class="grid reveal">
+   <div class="card span4 role" data-role="cible"><span class="tag">1 · CIBLE</span><h3>Crime informatique</h3><p>Le système est la cible.</p><p class="muted small">Piratage · sabotage · ransomware</p></div>
+   <div class="card span4 role" data-role="outil"><span class="tag">2 · OUTIL</span><h3>Cybercrime</h3><p>Réseau, en ligne : le numérique est le moyen.</p><p class="muted small">Fraude · escroquerie · harcèlement</p></div>
+   <div class="card span4 role" data-role="env"><span class="tag">3 · ENVIRONNEMENT</span><h3>Criminalité facilitée</h3><p>Crime classique amplifié par la technologie.</p><p class="muted small">Diffusion illicite · exploitation de données · trafic via messagerie</p></div>
+  </div>
+  <p class="small muted reveal" style="margin:16px 0 0">🔍 Classez : cliquez sur un exemple pour voir quel(s) rôle(s) du numérique il mobilise.</p>
+  <div class="chips reveal" id="chips">
+   <button class="chip" data-roles="cible" data-why="Le système est visé : accès illégal à un serveur.">Piratage d’un serveur</button>
+   <button class="chip" data-roles="cible outil" data-why="Affaire KillSec : le système est attaqué (cible) ET le logiciel sert à extorquer (outil).">Ransomware (KillSec)</button>
+   <button class="chip" data-roles="outil env" data-why="Escroquerie classique, mais menée via messagerie : le numérique amplifie.">Escroquerie par messagerie</button>
+   <button class="chip" data-roles="env" data-why="Le numérique est le milieu de diffusion de contenus ou données illicites.">Diffusion de données volées</button>
+  </div>
+  <div class="callout reveal" id="chipWhy" aria-live="polite">Cadre pédagogique : les auteurs emploient ces termes différemment — ce n’est pas une classification légale unique.</div>
+ </div>
+ <div class="slide-no">04 — QUALIFIER LE CRIME</div>
+</section>
+
+<!-- 06 CHAINE -->
+<section class="slide" data-title="La chaîne du cybercrime" data-notes="Chaque maillon est une question d’enquêteur. Le dommage peut être matériel, financier ou moral. La preuve, elle, se perd vite : horodatage, logs, captures, conservation. Cliquez sur chaque pièce pour l’appliquer à l’affaire KillSec.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 05 — Le tableau d’enquête</div>
+  <h2 class="reveal">Chaque maillon doit être <span class="red">prouvé.</span></h2>
+  <div class="board reveal" id="board">
+   <svg aria-hidden="true"></svg>
+   <div class="hub">CYBERCRIME</div>
+   <button class="node" style="left:3%;top:0" data-d="<b>AUTEUR —</b> Un suspect principal présumé, adolescent (16 ans annoncés) et deux autres personnes provisoirement arrêtées. Leur rôle exact reste à établir : aucun verdict."><div class="polaroid" style="--r:-3deg"><i class="pin"></i><div class="ph">👤</div><h3>Auteur</h3><p><b>Qui ?</b></p></div></button>
+   <button class="node" style="left:39%;top:-1%" data-d="<b>MOYEN —</b> Intrusion, exfiltration de données, puis menace de publication sur un site de fuite (double extorsion)."><div class="polaroid" style="--r:2deg"><i class="pin"></i><div class="ph">🛠</div><h3>Moyen</h3><p><b>Comment ?</b></p></div></button>
+   <button class="node" style="left:75%;top:0" data-d="<b>SYSTÈME —</b> Les réseaux des victimes ; côté enquête, les serveurs et le site de fuite pris sous contrôle des autorités."><div class="polaroid" style="--r:-2deg"><i class="pin"></i><div class="ph">🖥</div><h3>Système</h3><p><b>Où ?</b></p></div></button>
+   <button class="node" style="left:3%;top:63%" data-d="<b>VICTIME —</b> Des organisations visées dans le monde : environ 1 000 attaques présumées, dont ≈500 réussies selon les premiers éléments."><div class="polaroid" style="--r:2.5deg"><i class="pin"></i><div class="ph">🎯</div><h3>Victime</h3><p><b>Qui ?</b></p></div></button>
+   <button class="node" style="left:39%;top:66%" data-d="<b>DOMMAGE —</b> Matériel, financier ou moral : arrêt d’activité, coûts de restauration, données personnelles exposées, atteinte à la réputation."><div class="polaroid" style="--r:-2.5deg"><i class="pin"></i><div class="ph">💥</div><h3>Dommage</h3><p><b>Quoi ?</b></p></div></button>
+   <button class="node" style="left:75%;top:63%" data-d="<b>PREUVE —</b> Journaux, flux réseau, 110 To sécurisés. La preuve se perd vite : horodatage, copies, chaîne de conservation."><div class="polaroid" style="--r:3deg"><i class="pin"></i><div class="ph">🔎</div><h3>Preuve</h3><p><b>Trace.</b></p></div></button>
+  </div>
+  <div class="detail reveal" id="chainDetail" aria-live="polite"><b>CONSIGNE —</b> cliquez sur une pièce du tableau pour l’appliquer à l’affaire KillSec.</div>
+ </div>
+ <div class="slide-no">05 — LA CHAÎNE</div>
+</section>
+
+<!-- 07 SUSPECT -->
+<section class="slide" data-title="Le suspect (présumé)" data-notes="Règle de l’enquête : une adresse IP, un pseudonyme ou un fichier isolé ne prouve pas, à lui seul, l’identité ni l’intention. Distinguer faits établis par la source, et questions ouvertes. L’identité du suspect n’est pas publiée et il est présumé innocent.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 06 — Surveillance &amp; présomption</div>
+  <h2 class="reveal">Ce que l’on sait.<br><span class="red">Ce que l’on suppose.</span></h2>
+  <div class="grid reveal">
+   <div class="hud span5">
+    <div class="head">▣ ACTIVITÉ NUMÉRIQUE DÉTECTÉE</div>
+    <div class="scene"><div class="scanline"></div><svg viewBox="0 0 240 320"><use href="#hack"/></svg><div class="reticle"><i></i><i></i><i></i><i></i></div></div>
+    <dl>
+     <div class="r"><dt>ID : </dt><dd>SUSPECT-A (identité non publiée)</dd></div>
+     <div class="r"><dt>ÂGE ANNONCÉ : </dt><dd>16 ANS</dd></div>
+     <div class="r"><dt>RÔLE ALLÉGUÉ : </dt><dd>DIRIGEANT PRÉSUMÉ</dd></div>
+     <div class="r"><dt>STATUT : </dt><dd class="innocent">PRÉSUMÉ INNOCENT</dd></div>
+    </dl>
+   </div>
+   <div class="span7" style="display:grid;gap:14px">
+    <div class="card"><span class="tag g">ÉTABLI PAR LA SOURCE</span><ul><li>Le site de fuite attribué à KillSec a été repris par les autorités.</li><li>3 arrestations provisoires, 8 perquisitions.</li><li>Enquête internationale, coopération entre plusieurs États.</li></ul></div>
+    <div class="card"><span class="tag y">À CONFIRMER PAR LA JUSTICE</span><ul><li>Qui a réalisé quelle action précise ?</li><li>Quels éléments numériques sont authentiques et attribuables ?</li><li>Quelles infractions retenues, dans quelle juridiction ?</li></ul></div>
+   </div>
+   <div class="card span12"><div class="callout"><b>Règle de l’enquête :</b> une adresse IP, un pseudonyme ou un fichier isolé ne suffit généralement pas à prouver, à lui seul, l’identité d’une personne ni son intention criminelle. <span class="clue" tabindex="0">VPN, proxy, serveur compromis…</span></div></div>
+  </div>
+ </div>
+ <div class="slide-no">06 — FAITS VS HYPOTHÈSES</div>
+</section>
+
+<!-- 08 EXTORSION -->
+<section class="slide" data-title="Anatomie d’une extorsion" data-notes="Mentionnez que payer la rançon ne garantit rien et encourage le crime. Côté juridique, restez au niveau des catégories d’infractions sans citer de peine non vérifiée. Le journal affiché est FICTIF, à visée pédagogique.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 07 — Reconstruction technique</div>
+  <h2 class="reveal">Anatomie d’une <span class="red">extorsion numérique.</span></h2>
+  <p class="lead reveal">Dans la double extorsion, les données sont copiées <b>avant</b> le chiffrement : la menace continue même si la victime restaure ses sauvegardes.</p>
+  <div class="grid reveal" style="margin-top:20px">
+   <div class="card span3"><span class="tag">1</span><h3>Infection</h3><p class="small">Pièce jointe, faille ou accès mal sécurisé.</p></div>
+   <div class="card span3"><span class="tag">2</span><h3>Chiffrement</h3><p class="small">Fichiers illisibles, données copiées.</p></div>
+   <div class="card span3"><span class="tag">3</span><h3>Blocage</h3><p class="small">Activité arrêtée.</p></div>
+   <div class="card span3"><span class="tag">4</span><h3>Rançon</h3><p class="small">Paiement exigé, publication menacée.</p></div>
+   <div class="card span7"><div class="terminal"><div class="terminal-head"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div><pre><span class="prompt">[MODÈLE PÉDAGOGIQUE — JOURNAL FICTIF, PAS UN JOURNAL RÉEL DE KILLSEC]</span>
+<span class="ln" style="--d:0">T+00:00  <span class="alert">ALERTE</span>    Accès inhabituel détecté</span><span class="ln" style="--d:1">T+00:14  JOURNAL    Compte privilégié utilisé depuis une source inattendue</span><span class="ln" style="--d:2">T+00:31  RÉSEAU     Transfert sortant volumineux</span><span class="ln" style="--d:3">T+00:46  INCIDENT   Fichiers chiffrés · données potentiellement exposées</span><span class="ln" style="--d:4">T+01:02  <span class="alert">EXTORSION  « Payez ou nous publions »</span></span></pre></div></div>
+   <div class="span5" style="display:grid;gap:14px"><div class="card"><span class="tag y">ÉCONOMIQUE</span><p class="small" style="margin:0">Arrêt d’activité, pertes, coût de restauration.</p></div><div class="card"><span class="tag">JURIDIQUE</span><p class="small" style="margin:0">Atteinte au système et aux données, extorsion, obligations de protection des données. <span class="clue" tabindex="0">Payer ne garantit rien.</span></p></div></div>
+  </div>
+ </div>
+ <div class="slide-no">07 — MÉCANISME</div>
+</section>
+
+<!-- 09 PYRAMIDE -->
+<section class="slide" data-title="La pyramide des risques" data-notes="Lecture de bas en haut : la base est la plus fréquente, le sommet le plus grave. Donnez un exemple concret à chaque étage : compte volé, entreprise paralysée, désinformation, service public bloqué. Un clic individuel peut devenir un incident d’entreprise, puis un risque collectif.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièces 06–07 — Les risques</div>
+  <h2 class="reveal">Qui est exposé ?<br><span class="red">La pyramide des risques</span></h2>
+  <div class="pyr-wrap reveal">
+   <div><div class="pyr" id="pyr">
+    <button data-d="<b>ÉTAT — Infrastructures critiques.</b> Services publics bloqués, énergie, santé, administration : le risque devient collectif." aria-pressed="false"><span>ÉTAT<small>INFRASTRUCTURES</small></span></button>
+    <button data-d="<b>SOCIÉTÉ — Confiance numérique.</b> Désinformation, perte de confiance dans les services en ligne et dans les institutions." aria-pressed="false"><span>SOCIÉTÉ<small>CONFIANCE NUMÉRIQUE</small></span></button>
+    <button data-d="<b>ENTREPRISE — Données professionnelles.</b> Fuite de données, interruption d’activité, pertes financières, réputation. C’est le terrain de l’affaire KillSec." aria-pressed="false"><span>ENTREPRISE<small>DONNÉES PROFESSIONNELLES</small></span></button>
+    <button data-d="<b>INDIVIDU — Données personnelles.</b> Compte volé, vol d’identité, perte d’argent, atteinte à la vie privée. La base : le plus fréquent." aria-pressed="false"><span>INDIVIDU<small>DONNÉES PERSONNELLES</small></span></button>
+   </div><div class="axis">▲ PLUS GRAVE &nbsp;·&nbsp; ▼ PLUS FRÉQUENT</div></div>
+   <div><div class="detail" id="pyrDetail" style="min-height:150px;font-size:1.08rem" aria-live="polite"><b>CONSIGNE —</b> cliquez sur un étage de la pyramide.</div>
+   <div class="grid" style="margin-top:14px"><div class="card span4" style="padding:12px"><b class="small">Particulier</b><p class="small muted" style="margin:4px 0 0">Vol d’identité · perte d’argent</p></div><div class="card span4" style="padding:12px"><b class="small">Entreprise</b><p class="small muted" style="margin:4px 0 0">Fuite · interruption · réputation</p></div><div class="card span4" style="padding:12px"><b class="small">État / société</b><p class="small muted" style="margin:4px 0 0">Infrastructures · confiance</p></div></div></div>
+  </div>
+ </div>
+ <div class="slide-no">08 — LES RISQUES</div>
+</section>
+
+<!-- 10 CRIMES -->
+<section class="slide" data-title="Les principaux cybercrimes" data-notes="Chaque carte suit le même schéma : crime, fonctionnement, victime potentielle. Ne lisez pas les 9 : choisissez-en trois (phishing, ransomware, vol de données) et renvoyez aux pièces suivantes. Survolez une photo pour la « révéler ».">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 08 — Planche de preuves</div>
+  <h2 class="reveal">Les principaux <span class="red">cybercrimes</span></h2>
+  <div class="grid crimes reveal" style="margin-top:22px;gap:22px 16px">
+   <div class="polaroid span4" style="--r:-1.5deg"><i class="pin"></i><div class="ph">🎣</div><h3>Phishing</h3><p>Leurre → identifiants · <b>client</b></p></div>
+   <div class="polaroid span4" style="--r:1.2deg"><i class="pin"></i><div class="ph">☠️</div><h3>Ransomware <span class="tag" style="font-size:9px;margin:0;border-color:#8f0d16;color:#8f0d16">KILLSEC</span></h3><p>Chiffrement + rançon · <b>entreprise</b></p></div>
+   <div class="polaroid span4" style="--r:-.8deg"><i class="pin"></i><div class="ph">🔓</div><h3>Accès frauduleux</h3><p>Intrusion · <b>titulaire du compte</b></p></div>
+   <div class="polaroid span4" style="--r:1.4deg"><i class="pin"></i><div class="ph">💾</div><h3>Vol de données <span class="tag" style="font-size:9px;margin:0;border-color:#8f0d16;color:#8f0d16">KILLSEC</span></h3><p>Copie illicite · <b>personnes fichées</b></p></div>
+   <div class="polaroid span4" style="--r:-1.2deg"><i class="pin"></i><div class="ph">🎭</div><h3>Usurpation d’identité</h3><p>Se faire passer pour autrui · <b>personne usurpée</b></p></div>
+   <div class="polaroid span4" style="--r:.9deg"><i class="pin"></i><div class="ph">💳</div><h3>Fraude en ligne</h3><p>Tromperie → paiement · <b>acheteur</b></p></div>
+   <div class="polaroid span4" style="--r:-1deg"><i class="pin"></i><div class="ph">📢</div><h3>Cyberharcèlement</h3><p>Pression répétée en ligne · <b>cible</b></p></div>
+   <div class="polaroid span4" style="--r:1.6deg"><i class="pin"></i><div class="ph">👁️</div><h3>Atteinte à la vie privée</h3><p>Surveillance, divulgation · <b>individu</b></p></div>
+   <div class="polaroid span4" style="--r:-1.6deg"><i class="pin"></i><div class="ph">⚠️</div><h3>Contenus illicites</h3><p>Diffusion non autorisée · <b>personnes visées</b></p></div>
+  </div>
+ </div>
+ <div class="slide-no">09 — PLANCHE DE PREUVES</div>
+</section>
+
+<!-- 11 PHISHING -->
+<section class="slide" data-title="Pièce à conviction : le phishing" data-notes="Exemple fictif. Expliquez la qualification : tromperie + collecte de données d’accès + usage ultérieur = chaîne d’infractions. Le droit s’attache à l’intention et aux actes, pas à la technique. Survolez ou cliquez sur chaque indice.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 09 — Le phishing</div>
+  <h2 class="reveal">Pièce à <span class="red">conviction</span></h2>
+  <div class="grid">
+   <div class="span7 reveal">
+    <div class="mail" id="mail">
+     <div class="bar"><span>⚠ URGENT — Compte suspendu</span><span>Lun. 08:12</span></div>
+     <div class="body">
+      <p><mark data-k="4">De : securite@banque-secure-info.xyz</mark><span class="num">4</span></p>
+      <p><b><mark data-k="1">⚠ URGENT — Compte suspendu</mark></b><span class="num">1</span></p>
+      <p>Cher client,</p>
+      <p><mark data-k="5">Votre compte sera suspendu si vous n’agissez pas</mark><span class="num">5</span> : <mark data-k="1">cliquez ici sous 24 h</mark> et <mark data-k="3">saisissez vos identifiants.</mark><span class="num">3</span></p>
+      <span class="link"><mark data-k="2" style="color:#fff;border-color:#fff">https://banque-secure-info.xyz/connexion</mark></span><span class="num">2</span>
+     </div>
+     <div class="stamp fix">Preuve 09 · fictive</div>
+    </div>
+   </div>
+   <div class="span5 reveal">
+    <ul class="flags" id="flags">
+     <li><button data-k="1"><b>1</b>Urgence</button></li>
+     <li><button data-k="2"><b>2</b>Lien suspect</button></li>
+     <li><button data-k="3"><b>3</b>Demande d’identifiants</button></li>
+     <li><button data-k="4"><b>4</b>Fausse identité</button></li>
+     <li><button data-k="5"><b>5</b>Manipulation psychologique</button></li>
+    </ul>
+    <div class="callout" style="margin-top:12px"><b>Qualification :</b> tromperie + collecte de données d’accès + usage ultérieur = <b>chaîne d’infractions</b>. Le droit s’attache à l’intention et aux actes, pas à la technique.</div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-no">10 — PHISHING</div>
+</section>
+
+<!-- 12 LABO -->
+<section class="slide" data-title="Laboratoire de preuves" data-notes="Une trace n’est pas encore une preuve. Les enquêteurs doivent préserver les données, documenter leur collecte et tester les hypothèses concurrentes. Les lignes du journal sont fictives (adresse de la plage réservée à la documentation). Cliquez sur chaque ligne pour l’annoter.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 10 — Laboratoire de preuves</div>
+  <h2 class="reveal">Une trace n’est pas encore <span class="red">une preuve.</span></h2>
+  <div class="grid reveal" style="margin-top:18px">
+   <div class="card span3"><h3>01 · Journaux</h3><p class="small">Connexions, actions d’un compte. Vérifier horloges, rétention, intégrité.</p></div>
+   <div class="card span3"><h3>02 · Réseau</h3><p class="small">Flux, DNS, pare-feu. Une IP peut cacher un VPN ou un proxy.</p></div>
+   <div class="card span3"><h3>03 · Fichiers</h3><p class="small">Hash, métadonnées, chronologie, comparaison d’échantillons.</p></div>
+   <div class="card span3"><h3>04 · Conservation</h3><p class="small">Qui a collecté quoi, quand, comment, qui y a accédé.</p></div>
+   <div class="card span12"><span class="tag y">EXERCICE — EXAMINEZ CETTE TRACE FICTIVE (CLIQUEZ SUR CHAQUE LIGNE)</span>
+    <div class="evidence" style="margin-top:8px" id="logs">
+     <button class="logline" data-a="Connexion réussie à 02h14 sur un compte de service : qui l’utilisait réellement ? Vérifier l’horloge (UTC) et l’intégrité du journal.">2026-09-30T02:14:08Z  auth=success  user=svc_backup</button>
+     <button class="logline" data-a="≈ 8,4 Go sortants en 2 min 32 s : exfiltration possible… ou sauvegarde légitime ? Il faut tester les hypothèses concurrentes.">2026-09-30T02:16:40Z  outbound_bytes=8,429,000,000</button>
+     <button class="logline" data-a="Adresse d’une plage réservée à la documentation : fictive. Dans la réalité : VPN, proxy, serveur compromis ou plusieurs utilisateurs possibles.">2026-09-30T02:17:01Z  source_ip=203.0.113.42</button>
+     <button class="logline" data-a="Une empreinte (hash) prouve l’intégrité de la copie, pas la culpabilité. À consigner dans la chaîne de conservation.">SHA256 evidence image: 9b7f…[empreinte fictive]</button>
+    </div>
+    <div class="detail" id="logNote" style="margin-top:10px;min-height:56px" aria-live="polite"><b>ANNOTATION —</b> choisissez une ligne. Ces lignes sont créées pour la présentation : rien ici ne provient de l’enquête KillSec.</div>
+   </div>
+  </div>
+ </div>
+ <div class="slide-no">11 — SCIENCE FORENSIQUE</div>
+</section>
+
+<!-- 13 IA -->
+<section class="slide" data-title="L’IA entre dans le dossier" data-notes="Fait rapporté par le dossier d’origine : l’IA aurait servi à construire/maintenir l’infrastructure et à repérer des victimes. La source publique ne détaille pas les outils exacts : ne pas inventer un « algorithme secret ». Nuance : l’IA ne rend pas une attaque autonome ou indétectable.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 11 — L’intelligence artificielle</div>
+  <h2 class="reveal">Quand l’IA entre <span class="red">dans le dossier.</span></h2>
+  <div class="grid reveal">
+   <div class="card span7"><span class="tag">FAIT RAPPORTÉ</span><h3>Une infrastructure assistée par IA</h3><p>Selon le dossier d’origine, les enquêteurs ont découvert l’usage de l’IA pour construire et maintenir l’infrastructure de rançongiciel et repérer des victimes potentielles.</p><p class="muted small">La source publique ne détaille pas les outils, modèles ou tâches exactes : ne pas inventer un « algorithme secret » ni attribuer un rôle précis sans preuve.</p></div>
+   <div class="card span5"><span class="tag y">RISQUES À ÉVALUER</span><h3>Ce que l’IA change</h3><ul><li>Automatisation à plus grande échelle.</li><li>Messages frauduleux personnalisés.</li><li>Accélération des tâches répétitives.</li><li>Contenu authentique vs synthétique plus difficile à distinguer.</li></ul></div>
+   <div class="card span12"><div class="callout"><b>Nuance scientifique :</b> l’IA ne rend pas automatiquement une attaque autonome ou indétectable. Distinguer capacités démontrées, déclarations des autorités, hypothèses et sensationnalisme. <span class="clue" tabindex="0">Cette présentation se termine d’ailleurs par une vidéo générée par IA.</span></div></div>
+  </div>
+ </div>
+ <div class="slide-no">12 — IA &amp; CYBERCRIMINALITÉ</div>
+</section>
+
+<!-- 14 DROITS -->
+<section class="slide" data-title="Quels droits sont touchés ?" data-notes="Une même infraction peut toucher plusieurs droits. Rappelez que le droit à la vie privée est reconnu par la Déclaration universelle des droits de l’homme (art. 12) et le Pacte international relatif aux droits civils et politiques (art. 17). En Tunisie, la loi organique n° 2004-63 sur la protection des données personnelles s’applique. Laissez 2 réponses de la classe sur la question ouverte.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièces 11–12 — Droits &amp; vie privée</div>
+  <h2 class="reveal">Crime ➜ <span class="red">droit atteint</span></h2>
+  <div class="grid">
+   <div class="span7 reveal"><div class="rights">
+    <div class="row"><div class="c">Vol de données</div><div class="a">➜</div><div class="d">VIE PRIVÉE</div></div>
+    <div class="row"><div class="c">Usurpation d’identité</div><div class="a">➜</div><div class="d">IDENTITÉ / DIGNITÉ</div></div>
+    <div class="row"><div class="c">Cyberharcèlement</div><div class="a">➜</div><div class="d">DIGNITÉ / INTÉGRITÉ MORALE</div></div>
+    <div class="row"><div class="c">Fraude</div><div class="a">➜</div><div class="d">PROPRIÉTÉ</div></div>
+    <div class="row"><div class="c">Surveillance abusive</div><div class="a">➜</div><div class="d">VIE PRIVÉE / LIBERTÉS</div></div>
+    <div class="row"><div class="c">Diffusion de données privées</div><div class="a">➜</div><div class="d">VIE PRIVÉE / DIGNITÉ</div></div>
+   </div>
+   <p class="small muted" style="margin-top:12px">Une même infraction peut toucher plusieurs droits. <span class="clue" tabindex="0">DUDH art. 12 · PIDCP art. 17</span></p></div>
+   <div class="span5 reveal"><div class="card"><span class="tag">VIE PRIVÉE À L’ÈRE NUMÉRIQUE</span><h3>Nos données nous appartiennent-elles ?</h3>
+    <ul><li><b>Photos</b> — souvenirs, visages</li><li><b>Localisation</b> — habitudes, trajets</li><li><b>Historique</b> — centres d’intérêt</li><li><b>Réseaux sociaux</b> — relations, opinions</li></ul>
+    <div class="bigq" style="font-size:1.25rem;min-height:0;margin-top:16px">Une donnée mise en ligne reste-t-elle « à nous » ?</div>
+    <p class="small muted" style="margin:12px 0 0">Maîtrise de ses données : consentement, finalité, droit d’accès.</p></div></div>
+  </div>
+ </div>
+ <div class="slide-no">13 — DROITS FONDAMENTAUX</div>
+</section>
+
+<!-- 15 BALANCE -->
+<section class="slide" data-title="La balance : sécurité vs libertés" data-notes="Dimension éthique du cours. La lutte contre le cybercrime exige des pouvoirs (perquisition, interception) qui touchent aux libertés. La réponse : légalité, nécessité, proportionnalité et contrôle judiciaire. Faites bouger le curseur en direct. Rappelez que l’article 2 du décret-loi 2022-54 impose le respect des garanties constitutionnelles et des droits de l’homme.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièces 13 &amp; 19 — La balance</div>
+  <h2 class="reveal">Combattre <span class="red">sans sacrifier ?</span></h2>
+  <div class="grid">
+   <div class="span6 reveal bal">
+    <svg viewBox="-24 0 468 250" role="img" aria-label="Balance entre sécurité et libertés">
+     <rect x="205" y="62" width="10" height="168" fill="#4a4650"/><rect x="140" y="226" width="140" height="14" fill="#33303a"/>
+     <g id="beam"><rect x="40" y="56" width="340" height="8" rx="4" fill="#c9c5bb"/>
+      <g id="panL"><line x1="48" y1="62" x2="18" y2="150" stroke="#8d8995"/><line x1="48" y1="62" x2="78" y2="150" stroke="#8d8995"/><path d="M8 150H88Q82 178 48 178Q14 178 8 150Z" fill="#8f0d16"/><text x="48" y="204" text-anchor="middle" fill="#e9e5dc" font-family="Bebas Neue,Impact,sans-serif" font-size="18" letter-spacing="2">SÉCURITÉ</text></g>
+      <g id="panR"><line x1="372" y1="62" x2="342" y2="150" stroke="#8d8995"/><line x1="372" y1="62" x2="402" y2="150" stroke="#8d8995"/><path d="M332 150H412Q406 178 372 178Q338 178 332 150Z" fill="#2a5db0"/><text x="372" y="204" text-anchor="middle" fill="#e9e5dc" font-family="Bebas Neue,Impact,sans-serif" font-size="18" letter-spacing="2">LIBERTÉS</text></g>
+     </g><circle cx="210" cy="60" r="12" fill="#f5ca52"/>
+    </svg>
+    <label class="small muted" for="bal">Déplacez le curseur : plus de pouvoirs d’enquête ← → plus de protection des libertés</label>
+    <input type="range" id="bal" min="0" max="100" value="50" aria-describedby="zone">
+    <div class="zone ok" id="zone" aria-live="polite">⚖ ZONE DE PROPORTIONNALITÉ — légalité, nécessité, contrôle judiciaire</div>
+    <p class="muted small" style="margin-top:10px">Protéger la société : enquêter, intercepter, saisir, surveiller. Protéger les libertés : vie privée, expression, protection des données.</p>
+   </div>
+   <div class="span6 reveal"><h3 class="red typed" style="letter-spacing:.1em">OÙ PLACER LA LIMITE ? — 7 PRINCIPES</h3>
+    <div class="pri">
+     <div class="card"><h3>Proportionnalité</h3><p>Moyens adaptés au but.</p></div>
+     <div class="card"><h3>Nécessité</h3><p>Aucune autre solution.</p></div>
+     <div class="card"><h3>Vie privée</h3><p>Intrusion minimale.</p></div>
+     <div class="card"><h3>Données</h3><p>Finalité et durée limitées.</p></div>
+     <div class="card"><h3>Responsabilité</h3><p>Rendre des comptes.</p></div>
+     <div class="card"><h3>Transparence</h3><p>Règles connues.</p></div>
+     <div class="card" style="grid-column:1/-1"><h3>Sécurité</h3><p>Protéger sans excès.</p></div>
+    </div></div>
+  </div>
+ </div>
+ <div class="slide-no">14 — SÉCURITÉ VS LIBERTÉS</div>
+</section>
+
+<!-- 16 DILEMMES -->
+<section class="slide" data-title="Dilemmes éthiques" data-notes="Même une enquête légitime doit respecter des limites. Insistez sur la présomption d’innocence (le suspect principal serait mineur) et sur le dilemme de la rançon : payer ne garantit ni récupération ni suppression des copies, et peut financer d’autres crimes.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 19 — Éthique &amp; droits</div>
+  <h2 class="reveal">Même une enquête légitime<br>doit respecter <span class="red">des limites.</span></h2>
+  <div class="grid reveal">
+   <div class="card span4"><h3>Confidentialité</h3><p class="small">Les données volées contiennent parfois des informations médicales, financières ou personnelles : les copies d’enquête doivent être protégées et limitées au nécessaire.</p></div>
+   <div class="card span4"><h3>Présomption d’innocence</h3><p class="small">Une personne suspectée reste présumée innocente jusqu’à ce que sa culpabilité soit légalement établie. La médiatisation peut causer un préjudice irréversible.</p></div>
+   <div class="card span4"><h3>Proportionnalité</h3><p class="small">Surveillance, saisie et analyse doivent avoir une base légale, un objectif légitime et rester proportionnées.</p></div>
+   <div class="card span6"><span class="tag y">DILEMME N° 1</span><h3>La victime face à la rançon</h3><p class="small">Payer semble le plus rapide pour reprendre l’activité, mais ne garantit ni récupération ni suppression des copies, et peut financer d’autres crimes. La décision exige conseil, continuité d’activité et notification appropriée.</p></div>
+   <div class="card span6"><span class="tag y">DILEMME N° 2</span><h3>Le mineur présumé opérateur</h3><p class="small">Le suspect principal serait âgé de 16 ans : justice des mineurs, responsabilité, prévention et réinsertion se posent — sans diminuer les dommages subis par les victimes.</p></div>
+  </div>
+ </div>
+ <div class="slide-no">15 — DILEMMES</div>
+</section>
+
+<!-- 17 TUNISIE -->
+<section class="slide" data-title="Le cas de la Tunisie" data-notes="Vérifiés par recherche : décret-loi 2022-54 (13/09/2022, JORT n° 103 du 16/09/2022), loi n° 99-89 de 1999 (Code pénal) et adhésion à Budapest (8 mars 2024). Les lois 2004-63, 2004-5 et 2000-83 sont citées de mémoire : à relire sur le site officiel avant l’exposé. Nuance : le décret-loi 54 est critiqué par ARTICLE 19 et HRW pour ses effets sur la liberté d’expression. Ne citez aucune sanction sans lire le texte. Touche P : masquer/afficher les pastilles de vérification.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 14 — Le cas de la Tunisie 🇹🇳</div>
+  <h2 class="reveal">Cadre <span class="red">juridique</span></h2>
+  <div class="reveal" style="margin-top:22px">
+   <div class="law"><div class="n">01</div><div><h3>Code pénal · loi n° 99-89 du 2 août 1999</h3><p>Premières infractions informatiques.</p></div><span class="st ok prep">✔ VÉRIFIÉ</span></div>
+   <div class="law"><div class="n">02</div><div><h3>Décret-loi n° 2022-54 du 13 sept. 2022</h3><p>Infractions liées aux systèmes d’information, preuves électroniques. Critiqué (ARTICLE 19, HRW) pour ses effets sur la liberté d’expression.</p></div><span class="st ok prep">✔ VÉRIFIÉ</span></div>
+   <div class="law"><div class="n">03</div><div><h3>Loi org. n° 2004-63 du 27 juil. 2004</h3><p>Protection des données personnelles (INPDP).</p></div><span class="st chk prep">◌ À RELIRE</span></div>
+   <div class="law"><div class="n">04</div><div><h3>Loi n° 2004-5 du 3 fév. 2004</h3><p>Sécurité informatique (ANSI).</p></div><span class="st chk prep">◌ À RELIRE</span></div>
+   <div class="law"><div class="n">05</div><div><h3>Loi n° 2000-83 du 9 août 2000</h3><p>Échanges et commerce électroniques.</p></div><span class="st chk prep">◌ À RELIRE</span></div>
+   <div class="law"><div class="n">06</div><div><h3>Convention de Budapest</h3><p>Adhésion déposée le 8 mars 2024 — la Tunisie est le 70ᵉ État partie.</p></div><span class="st ok prep">✔ VÉRIFIÉ</span></div>
+  </div>
+  <p class="small muted reveal" style="margin-top:14px">Articles et sanctions volontairement non cités : à lire sur le JORT avant l’exposé.</p>
+ </div>
+ <div class="slide-no">16 — DROIT TUNISIEN</div>
+</section>
+
+<!-- 18 INTERNATIONAL -->
+<section class="slide" data-title="Pas de frontières" data-notes="La Convention de Budapest (STE 185) a été signée en 2001 par le Conseil de l’Europe. La Tunisie y a adhéré le 8 mars 2024 (70e État), ce qui ouvre l’accès aux mécanismes de coopération. Expliquez pourquoi une preuve stockée à l’étranger complique l’enquête. Les qualifications pénales sont des pistes, pas une décision de justice.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 15 — Dimension internationale</div>
+  <h2 class="reveal">Pas de <span class="red">frontières.</span></h2>
+  <div class="world reveal">
+   <svg viewBox="0 0 900 292" role="img" aria-label="Victime, serveur et auteur dans trois juridictions différentes, reliés par la coopération judiciaire">
+    <line class="border" x1="290" y1="20" x2="290" y2="190"/><line class="border" x1="610" y1="20" x2="610" y2="190"/>
+    <text class="sub" x="290" y="14" text-anchor="middle">FRONTIÈRE</text><text class="sub" x="610" y="14" text-anchor="middle">FRONTIÈRE</text>
+    <circle class="node-c" cx="130" cy="100" r="46"/><text x="130" y="108" text-anchor="middle" font-size="34">🎯</text><text class="lab" x="130" y="170" text-anchor="middle">VICTIME</text><text class="sub" x="130" y="188" text-anchor="middle">Tunisie</text>
+    <circle class="node-c" cx="450" cy="100" r="46"/><text x="450" y="108" text-anchor="middle" font-size="34">🖥️</text><text class="lab" x="450" y="170" text-anchor="middle">SERVEUR</text><text class="sub" x="450" y="188" text-anchor="middle">autre pays</text>
+    <circle class="node-c" cx="770" cy="100" r="46"/><text x="770" y="108" text-anchor="middle" font-size="34">👤</text><text class="lab" x="770" y="170" text-anchor="middle">AUTEUR</text><text class="sub" x="770" y="188" text-anchor="middle">autre juridiction</text>
+    <path id="route" d="M724,100 L496,100 M404,100 L176,100" stroke="#ff3b45" stroke-width="2" stroke-dasharray="4 6" fill="none"/>
+    <circle r="6" fill="#ff3b45"><animateMotion dur="3.6s" repeatCount="indefinite" path="M724,100 L176,100"/></circle>
+    <path d="M130,222 Q450,290 770,222" stroke="#f5ca52" stroke-width="2" fill="none" stroke-dasharray="8 6"/>
+    <text class="sub" x="450" y="284" text-anchor="middle" style="fill:#f5ca52">COOPÉRATION · ENTRAIDE JUDICIAIRE · CONVENTION DE BUDAPEST (2001)</text>
+   </svg>
+  </div>
+  <div class="grid reveal" style="margin-top:6px">
+   <div class="card span4"><span class="tag">PROBLÈME</span><p class="small" style="margin:0">Compétence territoriale, lenteur de l’entraide judiciaire, preuves stockées à l’étranger.</p></div>
+   <div class="card span4"><span class="tag g">RÉPONSE : BUDAPEST</span><p class="small" style="margin:0">Incrimination commune, procédures, coopération entre États. <span class="clue" tabindex="0">KillSec : 8 perquisitions, 4 pays.</span></p></div>
+   <div class="card span4"><span class="tag y">QUALIFICATIONS À EXAMINER</span><p class="small" style="margin:0">Accès illégal, atteinte aux données, extorsion, atteinte à la confidentialité, blanchiment, organisation criminelle — selon les faits prouvés. Pistes, pas verdict.</p></div>
+  </div>
+ </div>
+ <div class="slide-no">17 — LE CRIME TRAVERSE LES FRONTIÈRES</div>
+</section>
+
+<!-- 19 LINA -->
+<section class="slide" data-title="Cas pratique : l’affaire Lina" data-notes="Affaire inventée, à ne pas présenter comme réelle. Lisez les faits dans l’ordre et laissez la classe regarder les pièces avant la diapositive suivante.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 16 — Cas pratique</div>
+  <h2 class="reveal">L’affaire <span class="red">Lina</span> <span class="stamp" style="font-size:1rem;vertical-align:middle;margin-left:10px">Fictive</span></h2>
+  <div class="grid" style="gap:26px 18px;margin-top:24px">
+   <div class="evi span6 reveal" style="--r:-1deg"><span class="no">PREUVE 01</span><h3>CAPTURE D’ÉCRAN</h3><p>« Mot de passe modifié »</p></div>
+   <div class="evi msg span6 reveal" style="--r:1.2deg"><span class="no">PREUVE 02</span><h3>MESSAGE REÇU</h3><p>« Paie 500 ou je publie tes photos »</p></div>
+   <div class="evi span6 reveal" style="--r:.8deg"><span class="no">PREUVE 03</span><h3>COMPTE SUSPECT</h3><p>@anon_7731</p></div>
+   <div class="evi span6 reveal" style="--r:-1.3deg"><span class="no">PREUVE 04</span><h3>HISTORIQUE DE CONNEXION</h3><p>Connexion inconnue, <b>03h07</b></p></div>
+  </div>
+  <div class="callout reveal" style="margin-top:22px"><b>Les faits :</b> un auteur accède au compte, copie des photos privées, change le mot de passe, menace et réclame de l’argent.</div>
+ </div>
+ <div class="slide-no">18 — CAS PRATIQUE</div>
+</section>
+
+<!-- 20 A VOUS DE JUGER -->
+<section class="slide" data-title="À vous de juger" data-notes="Ne donnez aucune réponse. Laissez 3 à 5 minutes de discussion, une question à la fois, en notant les réponses au tableau. Les réponses seront comparées au verdict. Lancez le chronomètre.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 17 — À vous de juger</div>
+  <div class="grid">
+   <div class="span8"><h2 class="reveal">Questions<br>à la classe</h2>
+    <div class="qs reveal">
+     <div class="q">Quels crimes ont été commis ?</div>
+     <div class="q">Quels droits fondamentaux ont été atteints ?</div>
+     <div class="q">Quelles preuves peuvent être utilisées ?</div>
+     <div class="q">Qui peut être juridiquement responsable ?</div>
+     <div class="q">Que doit faire la victime ?</div>
+    </div></div>
+   <div class="span4 reveal" style="align-self:center;text-align:center">
+    <div class="tag y">DÉLIBÉRATION DU JURY</div>
+    <div class="timer" id="timer">05:00</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px"><button class="btn red" id="timerGo">DÉMARRER</button><button class="btn" id="timerReset">RÉINITIALISER</button></div>
+    <p class="muted small" style="margin-top:14px">Les réponses seront comparées au verdict.</p>
+   </div>
+  </div>
+ </div>
+ <div class="slide-no">19 — LE JURY DÉLIBÈRE</div>
+</section>
+
+<!-- 21 QUIZ -->
+<section class="slide" data-title="Décision du jury (quiz)" data-notes="Quiz interactif : 5 questions mélangées à chaque partie. Pédagogique : ni avis juridique ni simulation des conclusions réelles de l’enquête.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 17 bis — Décision du jury</div>
+  <h2 class="reveal">Vous dirigez <span class="red">l’enquête.</span></h2>
+  <div class="card reveal" id="quiz" style="margin-top:14px"></div>
+  <p class="small muted reveal" style="margin-top:12px">L’interactivité est pédagogique : elle ne constitue ni un avis juridique ni une simulation des conclusions réelles de l’enquête.</p>
+ </div>
+ <div class="slide-no">20 — LE JURY DÉCIDE</div>
+</section>
+
+<!-- 22 VERDICT -->
+<section class="slide" data-title="Le verdict" data-blood="1" data-notes="Qualifications indicatives : la qualification exacte et les peines dépendent des textes applicables (Code pénal, décret-loi 2022-54) et du juge. Sans lecture des articles, ne donnez pas de chiffres. Responsable : l’auteur, éventuellement ses complices ; la plateforme a des obligations de coopération. Conseil à la victime : ne rien supprimer, sécuriser le compte, déposer plainte, signaler à la plateforme. Cliquez 3 fois pour révéler les étapes.">
+ <svg class="splat" style="right:4%;top:20%;width:170px" viewBox="0 0 200 200"><use href="#splat"/></svg>
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 18 — Le verdict</div>
+  <h2 class="reveal">Analyse <span class="red">du cas</span></h2>
+  <div id="verdict" style="margin-top:14px">
+   <div class="vrow" data-step="1"><div class="f"><b>FAIT</b>Accès au compte sans droit</div><div class="ar">➜</div><div class="i"><b>INFRACTION</b>Accès frauduleux à un système / compte</div></div>
+   <div class="vrow" data-step="1"><div class="f"><b>FAIT</b>Changement du mot de passe</div><div class="ar">➜</div><div class="i"><b>INFRACTION</b>Atteinte aux données / au système</div></div>
+   <div class="vrow" data-step="2"><div class="f"><b>FAIT</b>Menace de publier, demande d’argent</div><div class="ar">➜</div><div class="i"><b>INFRACTION</b>Chantage / extorsion</div></div>
+   <div class="vrow" data-step="2"><div class="f"><b>DROIT ATTEINT</b>Droits fondamentaux de la victime</div><div class="ar">➜</div><div class="i"><b>DROITS</b>Vie privée · dignité · propriété</div></div>
+   <div class="vrow" data-step="3"><div class="f"><b>PREUVE</b>Captures · message · historique de connexion · conservation des traces</div><div class="ar">➜</div><div class="i"><b>CONSÉQUENCE</b>Plainte, enquête, qualification et sanction par le juge ; réparation du préjudice</div></div>
+   <div class="vrow" data-step="3"><div class="f"><b>RESPONSABLE</b>L’auteur, éventuellement ses complices ; la plateforme a des obligations de coopération</div><div class="ar">➜</div><div class="i"><b>CONSEIL À LA VICTIME</b>Ne rien supprimer · sécuriser le compte · déposer plainte · signaler à la plateforme</div></div>
+  </div>
+  <div class="vfoot"><button class="btn red" id="verdictBtn">RENDRE LE VERDICT (1/3)</button><span class="stamp big" id="verdictStamp" hidden>Verdict indicatif</span></div>
+  <p class="small muted" style="margin-top:12px">Qualifications indicatives : la qualification exacte et les peines dépendent des textes applicables (Code pénal, décret-loi 2022-54) et du juge.</p>
+ </div>
+ <div class="slide-no">21 — LE VERDICT</div>
+</section>
+
+<!-- 23 PREVENTION -->
+<section class="slide" data-title="Prévention : qui doit agir ?" data-notes="Chaque acteur a une responsabilité. Terminez par une mesure simple que chacun peut appliquer le jour même : la double authentification. Cochez les gestes du « plan du jour ».">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce 20 — Prévention</div>
+  <h2 class="reveal">Qui doit <span class="red">agir ?</span></h2>
+  <div class="grid reveal">
+   <div class="card span3"><span class="tag">UTILISATEUR</span><p class="small" style="margin:0">Mots de passe robustes · double authentification · vigilance.</p></div>
+   <div class="card span3"><span class="tag">ENTREPRISE</span><p class="small" style="margin:0">Sauvegardes hors ligne · formation · mises à jour · plan de réponse.</p></div>
+   <div class="card span3"><span class="tag">ÉTAT</span><p class="small" style="margin:0">Lois claires · coopération · sensibilisation.</p></div>
+   <div class="card span3"><span class="tag">PLATEFORMES</span><p class="small" style="margin:0">Signalement · modération · sécurité par défaut.</p></div>
+   <div class="card span12"><h3>Mon plan du jour <span class="muted small">— cliquez pour cocher</span></h3>
+    <div class="grid" id="plan" style="gap:0 14px">
+     <div class="span6"><button class="check" aria-pressed="false"><i>✓</i>Activer la double authentification</button><button class="check" aria-pressed="false"><i>✓</i>Un mot de passe unique par compte</button></div>
+     <div class="span6"><button class="check" aria-pressed="false"><i>✓</i>Mettre à jour mes appareils</button><button class="check" aria-pressed="false"><i>✓</i>Sauvegarder mes données importantes</button></div>
+    </div><span class="stamp green slam" id="secured" hidden>Dossier sécurisé</span></div>
+  </div>
+ </div>
+ <div class="slide-no">22 — PRÉVENTION</div>
+</section>
+
+<!-- 24 CLOS -->
+<section class="slide" data-title="Dossier clos" data-blood="1" data-notes="Fermez le dossier lentement et laissez la question à la classe. Reprenez la question d’ouverture : l’infraction naît de l’accès non autorisé, de la tromperie et de l’usage des données, pas du clic en lui-même. Puis annoncez : « un dernier enregistrement vient de nous parvenir… » et passez à la vidéo.">
+ <div class="tape" style="left:-4%;right:-4%;top:26%;transform:rotate(-3deg);opacity:.9"><span>DOSSIER CLOS — CASE CLOSED — DOSSIER CLOS — CASE CLOSED — DOSSIER CLOS — CASE CLOSED — DOSSIER CLOS — CASE CLOSED —</span></div>
+ <div class="inner" style="padding-top:30px">
+  <div class="stamp big reveal slam">Dossier clos</div>
+  <div class="quote reveal" style="margin-top:34px">« Derrière chaque <em>donnée volée</em>, il y a une personne.<br>Derrière chaque <em>système attaqué</em>, il y a un risque.<br>Et derrière chaque <em>cybercrime</em>, il y a une question juridique et éthique. »</div>
+  <div class="grid reveal" style="margin-top:30px">
+   <div class="card span7"><span class="tag g">RÉPONSE À LA PIÈCE 01</span><p style="margin:0">L’infraction naît de <b>l’accès non autorisé</b>, de <b>la tromperie</b> et de <b>l’usage des données</b> — pas du clic en lui-même.</p></div>
+   <div class="card span5"><span class="tag y">QUESTION FINALE</span><p style="margin:0;font-size:1.15rem"><b>Comment protéger le numérique sans oublier l’humain ?</b></p></div>
+  </div>
+  <p class="typed muted reveal" style="margin-top:20px">Présenté par Ranim Neji · … un dernier enregistrement vient d’arriver ▸</p>
+ </div>
+ <div class="slide-no">23 — DOSSIER CLOS</div>
+</section>
+
+<!-- 25 VIDEO -->
+<section class="slide" data-title="Enregistrement final — vidéo IA" data-blood="1" data-notes="Vidéo générée par IA. Placez le fichier « ai-video.mp4 » dans le même dossier que ce fichier HTML (ou chargez-le avec le bouton, ou collez un lien YouTube / mp4). La musique d’ambiance baisse automatiquement pendant la lecture.">
+ <div class="inner">
+  <div class="eyebrow reveal">Pièce finale — Enregistrement reçu</div>
+  <h2 class="reveal" style="margin-bottom:14px">Dernier <span class="red">enregistrement</span></h2>
+  <div class="cctv reveal" id="cctv">
+   <div class="hudtop"><span class="rec">REC · CAM 04</span><span id="tc">23:59:00</span></div>
+   <video id="aiVideo" playsinline preload="metadata" controls></video>
+   <div class="overlay" id="vOverlay">
+    <div id="vReady" style="display:flex;flex-direction:column;align-items:center;gap:14px"><button class="playbig" id="playBtn" aria-label="Lancer la vidéo">▶</button><div class="typed" id="vLabel">LANCER L’ENREGISTREMENT</div><div class="small muted">Vidéo générée par IA</div></div>
+    <div id="vMissing" hidden style="max-width:520px"><div class="stamp" style="font-size:1rem">Enregistrement introuvable</div><p class="small" style="margin:12px 0 0">Placez la vidéo <b>ai-video.mp4</b> dans le même dossier que ce fichier HTML, ou chargez-la ci-dessous.</p></div>
+   </div>
+  </div>
+  <div class="vidtools reveal">
+   <label class="btn" for="vFile" tabindex="0">📁 CHARGER UN FICHIER VIDÉO</label><input type="file" id="vFile" accept="video/*">
+   <input type="text" id="vUrl" placeholder="…ou collez un lien YouTube / .mp4" aria-label="Lien de la vidéo"><button class="btn" id="vUrlGo">CHARGER</button>
+  </div>
+ </div>
+ <div class="slide-no">24 — ENREGISTREMENT FINAL</div>
+</section>
+
+<!-- 26 SOURCES -->
+<section class="slide" data-title="Sources & références" data-notes="Les textes marqués « à vérifier » proviennent de connaissance générale ou de presse, pas du texte officiel : relisez-les sur le JORT / iort.gov.tn avant de présenter.">
+ <div class="inner">
+  <div class="eyebrow reveal">Annexe — Sources</div>
+  <h2 class="reveal">Références &amp; <span class="red">vérification</span></h2>
+  <div class="grid reveal">
+   <div class="card span6 sources"><h3>Consultées</h3>
+    <ul class="small">
+     <li>Décret-loi n° 2022-54 du 13/09/2022, JORT n° 103 du 16/09/2022.</li>
+     <li>Conseil de l’Europe, C-PROC : « La Tunisie, 70ᵉ Partie à la Convention de Budapest », 8 mars 2024.</li>
+     <li>Conseil de l’Europe, Octopus : profil Tunisie. <a href="https://www.coe.int/fr/web/octopus/-/tunisia" target="_blank" rel="noopener">coe.int ↗</a></li>
+     <li>ARTICLE 19 et Human Rights Watch, analyses du décret-loi 54.</li>
+     <li>ONU : DUDH (art. 12) ; PIDCP (art. 17) · Convention de Budapest, STE n° 185 (2001). <a href="https://www.coe.int/en/web/cybercrime/the-budapest-convention" target="_blank" rel="noopener">Texte ↗</a></li>
+    </ul></div>
+   <div class="card span6 sources"><h3>À relire sur le JORT / iort.gov.tn</h3>
+    <ul class="small">
+     <li>Loi n° 99-89 (1999) · Loi org. n° 2004-63 · Loi n° 2004-5 · Loi n° 2000-83.</li>
+     <li>Loi organique d’approbation de l’adhésion à Budapest (2024 ; numéro rapporté par la presse : 2024-9).</li>
+     <li>Constitution tunisienne (2022).</li>
+    </ul></div>
+   <div class="card span12 sources"><h3>Cas KillSec &amp; contexte</h3>
+    <ul class="small">
+     <li><b>Europol</b> — « Teenager suspected of leading KillSec ransomware group as law enforcement seizes servers and leak site », oct. 2026. <a href="https://www.europol.europa.eu/media-press/newsroom/news/teenager-suspected-of-leading-killsec-ransomware-group-law-enforcement-seizes-servers-and-leak-site" target="_blank" rel="noopener">Communiqué ↗</a></li>
+     <li><b>ANSSI</b> — « Panorama de la cybermenace 2025 » (mars 2026). <a href="https://cyber.gouv.fr/actualites/panorama-de-la-cybermenace-2025/" target="_blank" rel="noopener">Analyse ↗</a></li>
+     <li><b>Cyber Security Agency of Singapore</b> — attaque par rançongiciel contre Toppan Next Tech (7 avril 2025), exemple indépendant de double extorsion. <a href="https://www.csa.gov.sg/news-events/press-releases/joint-media-release-on-ransomware-attack-on-toppan-next-tech-/" target="_blank" rel="noopener">Communiqué ↗</a></li>
+    </ul>
+    <p class="small muted" style="margin:8px 0 0">Méthode : les chiffres attribués à KillSec proviennent du dossier d’origine et du communiqué d’Europol. Les journaux et le cas Lina sont fictifs. Les qualifications pénales sont des pistes d’analyse, pas une décision de justice.</p></div>
+  </div>
+  <p class="typed reveal" style="margin-top:18px">🔍 INDICES TROUVÉS À LA LOUPE : <b class="yellow" id="finalClues">0 / 0</b></p>
+ </div>
+ <div class="slide-no">25 — FIN DU DOSSIER</div>
+</section>
+
+</main>
+
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+const slides=$$('.slide'),N=slides.length;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(pointer:fine)').matches;
+const pad=n=>String(n).padStart(2,'0');
+let cur=-1,busy=false,entered=false;
+
+/* ================= SOUND (Web Audio, fully synthesised) ================= */
+const Snd=(()=>{
+ let ctx=null,master=null,wet=null,noiseBuf=null,on=false,timer=null,level=1;
+ function init(){
+  if(ctx)return true;
+  try{ctx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return false}
+  master=ctx.createGain();master.gain.value=0;
+  const comp=ctx.createDynamicsCompressor();master.connect(comp);comp.connect(ctx.destination);
+  wet=ctx.createGain();wet.gain.value=1;
+  const dl=ctx.createDelay(1.5);dl.delayTime.value=.41;const fb=ctx.createGain();fb.gain.value=.5;
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1400;
+  wet.connect(dl);dl.connect(lp);lp.connect(fb);fb.connect(dl);lp.connect(master);
+  const len=ctx.sampleRate*2;noiseBuf=ctx.createBuffer(1,len,ctx.sampleRate);
+  const d=noiseBuf.getChannelData(0);for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+  drone();return true;
+ }
+ function drone(){
+  const g=ctx.createGain();g.gain.value=.0001;g.gain.linearRampToValueAtTime(.16,ctx.currentTime+5);
+  const f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=230;f.Q.value=7;
+  [[48,'sawtooth'],[48.45,'sawtooth'],[72.3,'triangle'],[36,'sine']].forEach(([fr,ty])=>{const o=ctx.createOscillator();o.type=ty;o.frequency.value=fr;o.connect(f);o.start()});
+  const lfo=ctx.createOscillator();lfo.frequency.value=.06;const lg=ctx.createGain();lg.gain.value=100;lfo.connect(lg);lg.connect(f.frequency);lfo.start();
+  f.connect(g);g.connect(master);const s=ctx.createGain();s.gain.value=.4;g.connect(s);s.connect(wet);
+ }
+ const ready=()=>ctx&&on;
+ function out(node,w=.25){node.connect(master);const s=ctx.createGain();s.gain.value=w;node.connect(s);s.connect(wet)}
+ function env(g,t,a,d,peak){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)}
+ function tone(f,dur,type='sine',vol=.2,slide=0,delay=0,wetAmt=.3){
+  if(!ready())return;const t=ctx.currentTime+delay;
+  const o=ctx.createOscillator(),g=ctx.createGain(),fl=ctx.createBiquadFilter();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(20,f+slide),t+dur);
+  fl.type='lowpass';fl.frequency.value=type==='sine'?9000:1500;
+  env(g,t,.01,dur,vol);o.connect(fl);fl.connect(g);out(g,wetAmt);o.start(t);o.stop(t+dur+.05);
+ }
+ function noise(dur,type,f1,f2,vol,delay=0,att=0){
+  if(!ready())return;const t=ctx.currentTime+delay;
+  const s=ctx.createBufferSource();s.buffer=noiseBuf;
+  const bp=ctx.createBiquadFilter();bp.type=type;bp.frequency.setValueAtTime(f1,t);bp.frequency.exponentialRampToValueAtTime(f2,t+dur);bp.Q.value=type==='bandpass'?4:.7;
+  const g=ctx.createGain();env(g,t,att||Math.min(.02,dur/3),dur,vol);
+  s.connect(bp);bp.connect(g);out(g,.2);s.start(t);s.stop(t+dur+att+.05);
+ }
+ const heart=()=>{for(let k=0;k<3;k++){tone(55,.2,'sine',.55,-15,k*.95);tone(46,.22,'sine',.42,-12,k*.95+.24)}};
+ const creak=()=>tone(150,1.5,'sawtooth',.035,-70);
+ const bell=()=>{tone(220,3,'triangle',.05);tone(331,2.4,'sine',.04);tone(587,1.8,'sine',.022)};
+ const whisper=()=>noise(2.4,'bandpass',2600,1400,.07,0,1.1);
+ const ping=()=>tone(1760,1.6,'sine',.018);
+ function loop(){clearTimeout(timer);if(!on)return;[heart,creak,bell,whisper,ping][Math.floor(Math.random()*5)]();timer=setTimeout(loop,5500+Math.random()*7500)}
+ let last=0;
+ return{
+  get on(){return on},
+  set(v){
+   if(v){if(!init())return;on=true;ctx.resume&&ctx.resume();master.gain.setTargetAtTime(level,ctx.currentTime,.4);timer=setTimeout(loop,2500)}
+   else{on=false;clearTimeout(timer);if(ctx)master.gain.setTargetAtTime(0,ctx.currentTime,.15)}
+  },
+  duck(v){level=v;if(ctx&&on)master.gain.setTargetAtTime(v,ctx.currentTime,.4)},
+  tape(){noise(.55,'bandpass',500,3600,.35);noise(.4,'highpass',2000,6000,.14,.1)},
+  stamp(){tone(90,.4,'sine',.8,-55,0,.1);noise(.22,'lowpass',900,200,.55)},
+  click(){const n=performance.now();if(n-last<45)return;last=n;noise(.03,'highpass',1800,3200,.1)},
+  shutter(){noise(.05,'highpass',3000,5000,.25);noise(.07,'highpass',2000,4000,.2,.09)},
+  good(){[523,659,784].forEach((f,k)=>tone(f,.35,'triangle',.12,0,k*.09))},
+  bad(){tone(110,.6,'sawtooth',.18,-45);tone(104,.6,'sawtooth',.14,-40,.02)},
+  found(){tone(880,.7,'sine',.11);tone(1320,.55,'sine',.07,0,.06)},
+  heart
+ };
+})();
+const soundBtn=$('#soundBtn');
+function setSound(v){Snd.set(v);const on=Snd.on;soundBtn.textContent='SON : '+(on?'ON':'OFF');soundBtn.setAttribute('aria-pressed',String(on))}
+soundBtn.addEventListener('click',()=>setSound(!Snd.on));
+
+/* ================= helpers: flash, blood, counters, typewriter, board ================= */
+const flashEl=$('#flash');
+function flash(){flashEl.classList.remove('go');void flashEl.offsetWidth;flashEl.classList.add('go');Snd.shutter()}
+function drips(s){
+ let box=$('.drips',s);if(box)box.remove();box=document.createElement('div');box.className='drips';s.prepend(box);
+ const n=Math.max(8,Math.round(innerWidth/72));
+ for(let k=0;k<n;k++){const d=document.createElement('i');const w=4+Math.random()*10;
+  d.style.cssText=`left:${(Math.random()*98).toFixed(1)}%;--w:${w.toFixed(1)}px;--h:${(28+Math.random()*(k%3===0?170:70)).toFixed(0)}px;--dl:${(Math.random()*1.6+.3).toFixed(2)}s`;box.appendChild(d)}
+}
+const fmt=n=>n.toLocaleString('fr-FR');
+function counters(s){$$('[data-count]',s).forEach(el=>{const t=+el.dataset.count;if(reduce){el.textContent=fmt(t);return}
+ const t0=performance.now();const step=now=>{const p=Math.min(1,(now-t0)/1400);el.textContent=fmt(Math.round(t*(1-Math.pow(1-p,3))));if(p<1&&el.closest('.slide.active'))requestAnimationFrame(step)};requestAnimationFrame(step)})}
+function typers(s){$$('.tw',s).forEach(el=>{if(!el.dataset.full)el.dataset.full=el.textContent;const full=el.dataset.full;clearInterval(el._t);
+ if(reduce){el.textContent=full;return}
+ el.textContent='';let k=0;setTimeout(()=>{el._t=setInterval(()=>{k++;el.textContent=full.slice(0,k);if(k%2===0)Snd.click();if(k>=full.length)clearInterval(el._t)},34)},700)})}
+function drawBoard(s){
+ const b=$('.board',s);if(!b)return;const svg=$('svg',b),hub=$('.hub',b);
+ svg.innerHTML='';if(getComputedStyle(svg).display==='none')return;
+ const br=b.getBoundingClientRect();svg.setAttribute('viewBox',`0 0 ${br.width} ${br.height}`);
+ const hr=hub.getBoundingClientRect(),hx=hr.left-br.left+hr.width/2,hy=hr.top-br.top+hr.height/2;
+ $$('.node',b).forEach((n,k)=>{
+  const r=n.getBoundingClientRect(),x=r.left-br.left+r.width/2,above=(r.top+r.height/2)<(hr.top+hr.height/2);
+  const y=above?r.bottom-br.top-4:r.top-br.top+8,mx=(hx+x)/2,my=(hy+y)/2+26;
+  const p=document.createElementNS(NS,'path');p.setAttribute('d',`M${hx},${hy} Q${mx},${my} ${x},${y}`);p.setAttribute('pathLength','1');p.setAttribute('class','string');p.style.setProperty('--sd',(.4+k*.14)+'s');svg.appendChild(p);
+  const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',5);c.setAttribute('fill','#c1121f');c.setAttribute('stroke','#4d060d');svg.appendChild(c);
+ });
+}
+
+/* ================= navigation ================= */
+const wipe=$('#wipe'),progress=$('#progress'),counter=$('#counter'),prev=$('#prev'),next=$('#next'),notes=$('#notes'),notesText=$('#notesText');
+function onEnter(s,i){
+ s.classList.add('active');s.scrollTop=0;
+ $$('.reveal',s).forEach((el,k)=>el.style.setProperty('--d',k));
+ if(s.dataset.blood)drips(s);
+ counters(s);typers(s);drawBoard(s);
+ counter.textContent=`${pad(i+1)} / ${pad(N)}`;progress.style.width=(i/(N-1)*100)+'%';
+ notesText.textContent=s.dataset.notes||'';
+ prev.disabled=i===0;next.textContent=i===N-1?'RECOMMENCER ↺':'SUIVANT →';
+ try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+ $$('#indexList button').forEach((b,k)=>b.setAttribute('aria-current',String(k===i)));
+ s.dispatchEvent(new Event('enter'));
+}
+function onLeave(s){s.classList.remove('active');$$('.drips',s).forEach(x=>x.remove());$$('.tw',s).forEach(el=>clearInterval(el._t));s.dispatchEvent(new Event('leave'))}
+function swap(i){if(cur>=0)onLeave(slides[cur]);cur=i;onEnter(slides[i],i)}
+function go(i){
+ i=Math.max(0,Math.min(N-1,i));if(i===cur||busy)return;
+ if(cur<0||reduce){swap(i);return}
+ busy=true;wipe.classList.remove('run');void wipe.offsetWidth;wipe.classList.add('run');Snd.tape();
+ setTimeout(()=>swap(i),300);setTimeout(()=>{busy=false},700);
+}
+prev.addEventListener('click',()=>go(cur-1));
+next.addEventListener('click',()=>go(cur===N-1?0:cur+1));
+$$('[data-next]').forEach(b=>b.addEventListener('click',()=>go(cur+1)));
+/* index */
+const idx=$('#index'),idxList=$('#indexList');
+slides.forEach((s,i)=>{const li=document.createElement('li'),b=document.createElement('button');b.innerHTML=`<b>${pad(i+1)}</b><span>${s.dataset.title||''}</span>`;b.addEventListener('click',()=>{idx.classList.remove('open');go(i)});li.appendChild(b);idxList.appendChild(li)});
+counter.addEventListener('click',()=>idx.classList.toggle('open'));
+idx.addEventListener('click',e=>{if(e.target===idx)idx.classList.remove('open')});
+/* notes / prep / loupe toggles */
+const notesBtn=$('#notesBtn');
+function toggleNotes(){const o=notes.classList.toggle('open');notesBtn.setAttribute('aria-pressed',String(o))}
+notesBtn.addEventListener('click',toggleNotes);
+/* keyboard */
+document.addEventListener('keydown',e=>{
+ if(!entered)return;const t=e.target;
+ if(t&&t.tagName==='INPUT'&&t.type==='text')return;
+ if(e.ctrlKey||e.metaKey||e.altKey)return;
+ const k=e.key,isRange=t&&t.tagName==='INPUT'&&t.type==='range';
+ if(k==='Escape'){idx.classList.remove('open');return}
+ if(k==='PageDown'||(k==='ArrowRight'&&!isRange)||(k===' '&&t.tagName!=='BUTTON')){e.preventDefault();go(cur+1)}
+ else if(k==='PageUp'||(k==='ArrowLeft'&&!isRange)){e.preventDefault();go(cur-1)}
+ else if(k==='Home'){go(0)}else if(k==='End'){go(N-1)}
+ else if(k==='s'||k==='S')setSound(!Snd.on);
+ else if(k==='l'||k==='L')setLoupe(!loupe);
+ else if(k==='n'||k==='N')toggleNotes();
+ else if(k==='g'||k==='G')idx.classList.toggle('open');
+ else if(k==='p'||k==='P')document.body.classList.toggle('hide-prep');
+ else if(k==='f'||k==='F'){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(err){}}
+});
+/* swipe */
+let tx=0,ty=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.addEventListener('touchend',e=>{if(!entered)return;const t=e.target;if(t.closest&&t.closest('input,video,iframe,.board,.cctv'))return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>80&&Math.abs(dy)<55)go(cur+(dx<0?1:-1))},{passive:true});
+addEventListener('resize',()=>{if(cur>=0)drawBoard(slides[cur])});
+
+/* ================= clues + loupe ================= */
+const clues=$$('.clue'),clueEl=$('#clueCount');let found=0;
+function updClue(){clueEl.textContent='🔍 INDICES '+found+'/'+clues.length;const f=$('#finalClues');if(f)f.textContent=found+' / '+clues.length}
+function revealClue(c){if(c.classList.contains('found'))return;c.classList.add('found');found++;updClue();Snd.found()}
+clues.forEach(c=>{c.addEventListener('click',()=>revealClue(c));c.addEventListener('focus',()=>revealClue(c))});updClue();
+const lens=$('#lens'),lensBtn=$('#lensBtn');let loupe=fine,lx=-999,ly=-999,raf=0;
+function setLoupe(v){loupe=v;document.body.classList.toggle('loupe-on',v);lensBtn.setAttribute('aria-pressed',String(v));if(!v)lens.classList.remove('vis')}
+lensBtn.addEventListener('click',()=>setLoupe(!loupe));setLoupe(loupe);
+addEventListener('pointermove',e=>{
+ if(e.pointerType==='touch'||!loupe)return;lx=e.clientX;ly=e.clientY;lens.classList.add('vis');lens.style.transform=`translate(${lx}px,${ly}px)`;
+ if(!raf)raf=requestAnimationFrame(()=>{raf=0;const s=slides[cur];if(!s)return;
+  $$('.clue:not(.found)',s).forEach(c=>{const r=c.getBoundingClientRect(),cx=Math.max(r.left,Math.min(lx,r.right)),cy=Math.max(r.top,Math.min(ly,r.bottom));if((cx-lx)**2+(cy-ly)**2<70*70)revealClue(c)})})
+});
+document.documentElement.addEventListener('mouseleave',()=>lens.classList.remove('vis'));
+
+/* ================= slide interactions ================= */
+const q=(sel)=>$(sel);
+/* chips (slide 5) */
+const chipWhy=q('#chipWhy');
+$$('#chips .chip').forEach(c=>c.addEventListener('click',()=>{
+ const roles=c.dataset.roles.split(' ');$$('#chips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');
+ $$('.role').forEach(r=>r.classList.toggle('hit',roles.includes(r.dataset.role)));chipWhy.textContent=c.dataset.why;Snd.stamp()}));
+/* board (slide 6) */
+$$('#board .node').forEach(n=>n.addEventListener('click',()=>{$$('#board .node').forEach(x=>x.setAttribute('aria-pressed','false'));n.setAttribute('aria-pressed','true');q('#chainDetail').innerHTML=n.dataset.d;Snd.stamp()}));
+/* pyramid */
+$$('#pyr button').forEach(b=>b.addEventListener('click',()=>{$$('#pyr button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');q('#pyrDetail').innerHTML=b.dataset.d;Snd.click()}));
+/* phishing highlights */
+function hl(k,on){$$(`#mail mark[data-k="${k}"],#flags button[data-k="${k}"]`).forEach(x=>x.classList.toggle('hl',on))}
+$$('#mail mark,#flags button').forEach(el=>{const k=el.dataset.k;el.addEventListener('mouseenter',()=>hl(k,true));el.addEventListener('mouseleave',()=>hl(k,false));el.addEventListener('focus',()=>hl(k,true));el.addEventListener('blur',()=>hl(k,false));el.addEventListener('click',()=>{Snd.click();hl(k,true)})});
+/* logs */
+$$('#logs .logline').forEach(l=>l.addEventListener('click',()=>{$$('#logs .logline').forEach(x=>x.setAttribute('aria-pressed','false'));l.setAttribute('aria-pressed','true');q('#logNote').innerHTML='<b>ANNOTATION —</b> '+l.dataset.a;Snd.click()}));
+/* balance */
+const bal=q('#bal'),beam=q('#beam'),panL=q('#panL'),panR=q('#panR'),zone=q('#zone');
+function setBal(){const v=+bal.value,a=(v-50)*.32;beam.setAttribute('transform',`rotate(${a} 210 60)`);panL.setAttribute('transform',`rotate(${-a} 48 62)`);panR.setAttribute('transform',`rotate(${-a} 372 62)`);
+ if(v<30){zone.className='zone bad';zone.textContent='⚠ SURVEILLANCE EXCESSIVE — disproportionnée, atteinte aux libertés'}
+ else if(v>70){zone.className='zone bad';zone.textContent='⚠ LIBERTÉS SANS ENQUÊTE POSSIBLE — risque d’impunité'}
+ else{zone.className='zone ok';zone.textContent='⚖ ZONE DE PROPORTIONNALITÉ — légalité, nécessité, contrôle judiciaire'}}
+bal.addEventListener('input',setBal);setBal();
+/* timer */
+const timerEl=q('#timer'),tGo=q('#timerGo'),tReset=q('#timerReset');let tLeft=300,tInt=null;
+function drawT(){timerEl.textContent=pad(Math.floor(tLeft/60))+':'+pad(tLeft%60);timerEl.classList.toggle('low',tLeft<=30&&tLeft>0)}
+function stopT(){clearInterval(tInt);tInt=null;tGo.textContent='DÉMARRER'}
+tGo.addEventListener('click',()=>{if(tInt){stopT();return}tGo.textContent='PAUSE';tInt=setInterval(()=>{tLeft--;drawT();if(tLeft<=10)Snd.click();if(tLeft<=0){stopT();Snd.stamp();flash()}},1000)});
+tReset.addEventListener('click',()=>{stopT();tLeft=300;drawT()});
+slides[19].addEventListener('leave',()=>{stopT();tLeft=300;drawT()});
+/* quiz */
+const QZ=[
+ {q:'Un transfert inhabituel de données est détecté sur un compte de service. Quelle est la meilleure prochaine étape ?',o:['Accuser publiquement la première adresse IP trouvée.','Préserver les journaux, contenir l’incident et documenter la collecte.','Effacer tous les systèmes pour faire disparaître le malware.','Payer immédiatement, sans consulter personne.'],a:1,ok:'Bonne décision : préserver l’intégrité des preuves, contenir le risque et consigner les actions protège les systèmes et l’enquête.',ko:'Pas si vite. Cette action risque de détruire des traces, de nuire aux victimes ou de conclure sans preuves suffisantes.'},
+ {q:'Que prouve une adresse IP isolée ?',o:['L’identité certaine du criminel.','La culpabilité pénale de l’abonné.','Un indice à contextualiser et corroborer.','L’intention de voler des données.'],a:2,ok:'Exact : une IP est un indice technique, à corroborer avec d’autres éléments et dans le respect de la chaîne de conservation.',ko:'Non. Une IP seule ne prouve ni l’identité, ni l’intention, ni la culpabilité.'},
+ {q:'« Un message, un clic… » À quel moment l’action devient-elle une infraction ?',o:['Au moment du clic de la victime sur le lien.','Dès qu’un message suspect est reçu.','Quand un tiers accède sans droit, par tromperie, puis exploite les données.','Uniquement si la victime perd de l’argent.'],a:2,ok:'Exact : l’infraction naît de l’accès non autorisé, de la tromperie et de l’usage des données — pas du clic en lui-même.',ko:'Non. Le clic de la victime n’est pas l’infraction ; ce sont l’accès non autorisé, la tromperie et l’usage des données.'},
+ {q:'En quoi la Convention de Budapest est-elle utile à la Tunisie ?',o:['Elle remplace le Code pénal tunisien.','Elle ouvre l’accès à des mécanismes de coopération internationale (adhésion déposée le 8 mars 2024).','Elle interdit toute surveillance numérique.','Elle supprime les règles de preuve.'],a:1,ok:'Exact : incrimination commune, procédures et coopération entre États, ce qui aide face à des preuves ou des auteurs à l’étranger.',ko:'Non. La Convention n’efface pas le droit national : elle organise des infractions communes et la coopération entre États.'},
+ {q:'Quel principe exige des moyens adaptés au but poursuivi par l’enquête ?',o:['La proportionnalité','La rapidité','L’opacité','L’anonymat'],a:0,ok:'Exact : la proportionnalité — avec la légalité, la nécessité et le contrôle judiciaire — encadre les pouvoirs d’enquête.',ko:'Non : c’est la proportionnalité qui exige des moyens adaptés au but poursuivi.'}
+];
+const quiz=q('#quiz');let qi=0,score=0;
+function shuffle(a){const r=a.map((t,i)=>({t,i}));for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function renderQ(){
+ if(qi>=QZ.length){const rank=score>=QZ.length-1?'INSPECTEUR EN CHEF':score>=3?'ENQUÊTEUR CONFIRMÉ':'STAGIAIRE — RELISEZ LE DOSSIER';
+  quiz.innerHTML=`<div class="pips">${QZ.map(()=>'<i class="done"></i>').join('')}</div><h3>RAPPORT DU JURY</h3><div class="metric">${score} / ${QZ.length}</div><p class="stamp ${score>=3?'green':''}" style="margin-top:14px">${rank}</p><div style="margin-top:16px"><button class="btn red" id="qAgain">REJOUER</button></div>`;
+  q('#qAgain').addEventListener('click',()=>{qi=0;score=0;renderQ()});if(score>=3)Snd.good();return}
+ const d=QZ[qi];
+ const order=shuffle(d.o);
+ quiz.innerHTML=`<div class="pips">${QZ.map((_,k)=>`<i class="${k<qi?'done':k===qi?'on':''}"></i>`).join('')}</div><h3>Question ${qi+1} — ${d.q}</h3><div class="quiz-opts">${order.map(o=>`<button data-i="${o.i}">${o.t}</button>`).join('')}</div><div class="feedback" id="qf" aria-live="polite"></div><div id="qnext"></div>`;
+ $$('.quiz-opts button',quiz).forEach(b=>b.addEventListener('click',()=>{
+  const ok=+b.dataset.i===d.a;$$('.quiz-opts button',quiz).forEach(x=>{x.disabled=true;if(+x.dataset.i===d.a)x.classList.add('correct')});
+  if(!ok)b.classList.add('wrong');else score++;
+  q('#qf').textContent=ok?d.ok:d.ko;ok?Snd.good():Snd.bad();
+  q('#qnext').innerHTML=`<button class="btn red" id="qn" style="margin-top:6px">${qi===QZ.length-1?'VOIR LE RAPPORT':'QUESTION SUIVANTE →'}</button>`;q('#qn').addEventListener('click',()=>{qi++;renderQ()})}));
+}
+renderQ();
+/* verdict */
+const vBtn=q('#verdictBtn'),vStamp=q('#verdictStamp');let vStep=0;
+function drawVerdict(){$$('#verdict .vrow').forEach(r=>r.classList.toggle('show',+r.dataset.step<=vStep))}
+vBtn.addEventListener('click',()=>{vStep++;drawVerdict();Snd.stamp();
+ if(vStep<3)vBtn.textContent=`RENDRE LE VERDICT (${vStep+1}/3)`;
+ else{vBtn.hidden=true;vStamp.hidden=false;vStamp.classList.remove('slam');void vStamp.offsetWidth;vStamp.classList.add('slam');flash();Snd.heart()}});
+slides[21].addEventListener('enter',()=>{vStep=0;drawVerdict();vBtn.hidden=false;vBtn.textContent='RENDRE LE VERDICT (1/3)';vStamp.hidden=true});
+/* plan du jour */
+const plan=$$('#plan .check'),secured=q('#secured');
+plan.forEach(b=>b.addEventListener('click',()=>{b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));Snd.click();
+ const all=plan.every(x=>x.getAttribute('aria-pressed')==='true');secured.hidden=!all;if(all){secured.classList.remove('slam');void secured.offsetWidth;secured.classList.add('slam');Snd.good()}}));
+
+/* ================= AI video ================= */
+const vid=q('#aiVideo'),ov=q('#vOverlay'),vReady=q('#vReady'),vMissing=q('#vMissing'),vLabel=q('#vLabel'),cctv=q('#cctv');
+let ifr=null,tcInt=null;
+vid.addEventListener('loadedmetadata',()=>{vMissing.hidden=true;vReady.hidden=false});
+vid.addEventListener('error',()=>{if(!vid.getAttribute('src'))return;vReady.hidden=true;vMissing.hidden=false;ov.classList.remove('hide')});
+vid.addEventListener('play',()=>{ov.classList.add('hide');Snd.duck(.1)});
+vid.addEventListener('pause',()=>Snd.duck(1));
+vid.addEventListener('ended',()=>{Snd.duck(1);vLabel.textContent='REVOIR L’ENREGISTREMENT';ov.classList.remove('hide');vReady.hidden=false;vMissing.hidden=true;Snd.stamp()});
+vid.src='ai-video.mp4';
+q('#playBtn').addEventListener('click',()=>{flash();vid.play().catch(()=>{})});
+function useFile(u){if(ifr){ifr.remove();ifr=null}vid.hidden=false;vid.src=u;vid.load();vMissing.hidden=true;vReady.hidden=false;ov.classList.remove('hide');vLabel.textContent='LANCER L’ENREGISTREMENT'}
+q('#vFile').addEventListener('change',e=>{const f=e.target.files[0];if(f)useFile(URL.createObjectURL(f))});
+q('label[for=vFile]').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();q('#vFile').click()}});
+function loadURL(){const u=q('#vUrl').value.trim();if(!u)return;
+ const m=u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/))([\w-]{11})/);
+ if(m){vid.pause();vid.hidden=true;ov.classList.add('hide');if(ifr)ifr.remove();ifr=document.createElement('iframe');ifr.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';ifr.allowFullscreen=true;ifr.title='Vidéo générée par IA';ifr.dataset.src='https://www.youtube.com/embed/'+m[1]+'?rel=0';ifr.src=ifr.dataset.src;cctv.insertBefore(ifr,vid)}
+ else if(/^https?:\/\//i.test(u)||/\.(mp4|webm|mov)$/i.test(u)){useFile(u)}}
+q('#vUrlGo').addEventListener('click',loadURL);q('#vUrl').addEventListener('keydown',e=>{if(e.key==='Enter')loadURL()});
+slides[24].addEventListener('enter',()=>{if(ifr&&ifr.dataset.src)ifr.src=ifr.dataset.src});
+slides[24].addEventListener('leave',()=>{vid.pause();clearInterval(tcInt);if(ifr)ifr.src='about:blank'});
+/* the CCTV clock: 23:59:00 then ticks (cap at 23:59:59 then wraps visually) */
+slides[24].addEventListener('enter',()=>{clearInterval(tcInt);let sec=0;tcInt=setInterval(()=>{sec=(sec+1)%60;q('#tc').textContent='23:59:'+pad(sec)},1000)});
+
+/* ================= gate ================= */
+function enterDossier(withSound){
+ if(entered)return;entered=true;setSound(withSound);$('#gate').classList.add('gone');
+ if(withSound){Snd.tape();setTimeout(()=>Snd.stamp(),450)}
+ const h=parseInt((location.hash||'').slice(1),10);setTimeout(()=>go(h>=1&&h<=N?h-1:0),reduce?0:350);
+}
+$('#enterSound').addEventListener('click',()=>enterDossier(true));
+$('#enterSilent').addEventListener('click',()=>enterDossier(false));
+$('#enterSound').focus({preventScroll:true});
+})();
+</script>
+</body>
+</html>
